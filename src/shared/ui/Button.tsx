@@ -2,17 +2,32 @@ import styled from "@emotion/styled";
 
 interface ButtonProps {
   text: string;
+  fontColor: string;
+  backgroundColor: string;
+  borderColor?: string;
 }
 
-export default function Button({ text }: ButtonProps) {
+export default function Button({
+  text,
+  fontColor,
+  backgroundColor,
+  borderColor,
+}: ButtonProps) {
   return (
-    <Wrapper>
-      <Text>{text}</Text>
+    <Wrapper
+      type="button"
+      $backgroundColor={backgroundColor}
+      $borderColor={borderColor}
+    >
+      <Text $fontColor={fontColor}>{text}</Text>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.button<{
+  $backgroundColor: string;
+  $borderColor?: string;
+}>`
   position: fixed;
   left: 50%;
   bottom: calc(24px + env(safe-area-inset-bottom));
@@ -26,13 +41,14 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 10px;
   border-radius: 12px;
-  border: 2px solid var(--pink-p3, #dfafaf);
-  background: #fff;
+  border: 2px solid ${({ $borderColor }) => $borderColor ?? "transparent"};
+  background: ${({ $backgroundColor }) => $backgroundColor};
+  cursor: pointer;
 `;
 
-const Text = styled.div`
+const Text = styled.span<{ $fontColor: string }>`
   font-family: "Cafe24 Ssurround", sans-serif;
-  color: #ce8f8f;
+  color: ${({ $fontColor }) => $fontColor};
   font-size: 24px;
   font-weight: 400;
   line-height: 150%;
