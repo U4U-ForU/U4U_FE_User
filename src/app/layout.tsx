@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import "./global.css";
 
 export const metadata: Metadata = {
   title: "U4U",
