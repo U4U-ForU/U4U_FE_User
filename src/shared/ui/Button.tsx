@@ -39,6 +39,7 @@ const Wrapper = styled.button<{
   border: 2px solid ${({ $borderColor }) => $borderColor ?? "transparent"};
   background: ${({ $backgroundColor }) => $backgroundColor};
   cursor: pointer;
+  box-shadow: 0 4px 6px 0 var(--color-opacity-black-15, rgba(0, 0, 0, 0.15));
 `;
 
 const Text = styled.span<{ $fontColor: string }>`
