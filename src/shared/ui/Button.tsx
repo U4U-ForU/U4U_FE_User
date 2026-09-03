@@ -28,11 +28,6 @@ const Wrapper = styled.button<{
   $backgroundColor: string;
   $borderColor?: string;
 }>`
-  position: fixed;
-  left: 50%;
-  bottom: calc(24px + env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  z-index: 10;
   display: flex;
   width: min(353px, calc(100% - 32px));
   height: 64px;
