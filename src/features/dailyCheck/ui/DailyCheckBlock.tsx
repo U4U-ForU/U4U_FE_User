@@ -6,7 +6,7 @@ interface DailyCheckProps {
   totalCount: number;
 }
 
-export default function DailyCheckBlock({totalCount}: DailyCheckProps) {
+export default function DailyCheckBlock({ totalCount }: DailyCheckProps) {
   return (
     <Wrapper>
       <DailyTitle />
