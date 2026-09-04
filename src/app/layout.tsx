@@ -1,4 +1,5 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
+import "./global.css";
 
 export const metadata: Metadata = {
   title: "U4U",
@@ -15,10 +16,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#f5b800",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <main className="app-content">{children}</main>
+      </body>
     </html>
   );
 }
