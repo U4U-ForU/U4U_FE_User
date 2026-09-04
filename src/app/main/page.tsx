@@ -56,7 +56,7 @@ const BottomContent = styled.div`
   bottom: calc(24px + env(safe-area-inset-bottom));
   z-index: 1;
   display: flex;
-  width: 100vw;
+  width: min(100vw, 393px);
   transform: translateX(-50%);
   flex-direction: column;
   align-items: center;
@@ -65,12 +65,12 @@ const BottomContent = styled.div`
 
 const BgBottom = styled.div`
   position: fixed;
-  right: 0;
+  left: 50%;
   bottom: 0;
-  left: 0;
   z-index: 0;
-  width: 100vw;
+  width: min(100vw, 393px);
   height: 215px;
+  transform: translateX(-50%);
   border-top: 2px solid var(--pink-p3, #dfafaf);
   background: var(--pink-p2, #ffd3d3);
   pointer-events: none;
