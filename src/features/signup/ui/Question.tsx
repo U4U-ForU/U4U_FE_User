@@ -1,27 +1,27 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 
 interface QuestionProps {
   text: "회원가입" | "로그인";
 }
 
 export default function Question({ text }: QuestionProps) {
-  return (
-    <>
-      <Wrapper>
-        {text === "회원가입" ? (
-          <Q>계정이 있으신가요?</Q>
-        ) : (
-          <Q>계정이 없으신가요?</Q>
-        )}
+  const router = useRouter();
 
-        {/* 로그인/회원가입 페이지 이동 라우터 연결 */}
-        <Button type="button">
-          {text === "회원가입" ? "로그인" : "회원가입"}
-        </Button>
-      </Wrapper>
-    </>
+  const isSignup = text === "회원가입";
+
+  return (
+    <Wrapper>
+      <Q>{isSignup ? "계정이 있으신가요?" : "계정이 없으신가요?"}</Q>
+      <Button
+        type="button"
+        onClick={() => router.push(isSignup ? "/login" : "/signup")}
+      >
+        {isSignup ? "로그인" : "회원가입"}
+      </Button>
+    </Wrapper>
   );
 }
 
