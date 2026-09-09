@@ -15,18 +15,18 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overscroll-behavior: none;
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .app-content {
   width: 100%;
   max-width: 393px;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
-  padding: 15px 20px;
 }
 
 button,
