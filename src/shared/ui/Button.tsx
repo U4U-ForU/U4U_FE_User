@@ -9,6 +9,8 @@ interface ButtonProps {
   borderColor?: string;
   fontBorderColor?: string;
   boxShadow?: boolean;
+  onClick?: () => void;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -18,10 +20,14 @@ export default function Button({
   borderColor,
   fontBorderColor,
   boxShadow = true,
+  onClick,
+  disabled = false,
 }: ButtonProps) {
   return (
     <Wrapper
       type="button"
+      onClick={onClick}
+      disabled={disabled}
       $backgroundColor={backgroundColor}
       $borderColor={borderColor}
       $boxShadow={boxShadow}
@@ -49,10 +55,16 @@ const Wrapper = styled.button<{
   border: 2px solid ${({ $borderColor }) => $borderColor};
   background: ${({ $backgroundColor }) => $backgroundColor};
   cursor: pointer;
+  transition: opacity 0.15s ease;
   box-shadow: ${({ $boxShadow }) =>
     $boxShadow
       ? "0 4px 6px 0 var(--color-opacity-black-15, rgba(0, 0, 0, 0.15))"
       : "none"};
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 const Text = styled.span<{
