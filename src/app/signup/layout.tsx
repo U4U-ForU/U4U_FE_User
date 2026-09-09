@@ -1,10 +1,20 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 import { BOTTOM_AREA_HEIGHT } from "@/src/features/signup/ui/BottomArea";
+import { useSignupStore } from "@/src/features/signup/model/signupStore";
+
+const FIRST_STEP = "/signup/email";
 
 export default function SignupLayout({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const isDirectEntry =
+    pathname !== FIRST_STEP && useSignupStore.getState().form.email === "";
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
 
@@ -15,10 +25,16 @@ export default function SignupLayout({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isDirectEntry) return;
+
+    router.replace(FIRST_STEP);
+  }, [isDirectEntry, router]);
+
   return (
     <Wrapper>
       <Background />
-      <Content>{children}</Content>
+      <Content>{isDirectEntry ? null : children}</Content>
     </Wrapper>
   );
 }
