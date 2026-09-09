@@ -16,6 +16,7 @@ export default function Question({ text }: QuestionProps) {
           <Q>계정이 없으신가요?</Q>
         )}
 
+        {/* 로그인/회원가입 페이지 이동 라우터 연결 */}
         <Button type="button">
           {text === "회원가입" ? "로그인" : "회원가입"}
         </Button>
