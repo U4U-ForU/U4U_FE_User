@@ -1,9 +1,5 @@
-"use client";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <>
-      <div style={{ display: "flex", justifyContent: "center" }}>하이?</div>
-    </>
-  );
+  redirect("/splash");
 }
