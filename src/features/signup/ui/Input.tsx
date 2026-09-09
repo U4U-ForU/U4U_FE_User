@@ -7,9 +7,16 @@ import { useState } from "react";
 interface InputProps {
   placeholder: string;
   type?: "text" | "password";
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-export default function Input({ placeholder, type = "text" }: InputProps) {
+export default function Input({
+  placeholder,
+  type = "text",
+  value,
+  onChange,
+}: InputProps) {
   const [isVisible, setIsVisible] = useState(false);
   const isPassword = type === "password";
 
@@ -22,7 +29,9 @@ export default function Input({ placeholder, type = "text" }: InputProps) {
       <Field
         type={isPassword && !isVisible ? "password" : "text"}
         placeholder={placeholder}
-        autoComplete={isPassword ? "current-password" : undefined}
+        value={value}
+        onChange={(event) => onChange?.(event.target.value)}
+        autoComplete={isPassword ? "new-password" : undefined}
       />
       {isPassword && (
         <VisibilityButton
