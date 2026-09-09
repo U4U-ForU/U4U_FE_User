@@ -1,33 +1,32 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "@/src/shared/ui/Button";
-import Input from "@/src/features/signup/ui/Input";
-import Requirement from "@/src/features/signup/ui/Requirement";
-import Title from "@/src/features/signup/ui/Title";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
+import Input from "@/src/features/signup/ui/Input";
+import Question from "@/src/features/signup/ui/Question";
+import Requirement from "@/src/features/signup/ui/Requirement";
+import Title from "@/src/features/signup/ui/Title";
 import { validateNickname } from "@/src/features/signup/model/validate";
-import Question from "../Question";
+import { useSignupStore } from "@/src/features/signup/model/signupStore";
 
-interface NicknameProps {
-  value: string;
-  onChange: (value: string) => void;
-  onNext: () => void;
-}
-
-export default function Nickname({ value, onChange, onNext }: NicknameProps) {
+export default function NicknamePage() {
+  const router = useRouter();
+  const nickname = useSignupStore((state) => state.form.nickname);
+  const setField = useSignupStore((state) => state.setField);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const errorMessage = isSubmitted ? validateNickname(value) : "";
+  const errorMessage = isSubmitted ? validateNickname(nickname) : "";
 
   const handleNext = () => {
     setIsSubmitted(true);
 
-    if (validateNickname(value) !== "") return;
+    if (validateNickname(nickname) !== "") return;
 
-    onNext();
+    router.push("/signup/id");
   };
 
   return (
@@ -37,8 +36,8 @@ export default function Nickname({ value, onChange, onNext }: NicknameProps) {
       <Field>
         <Input
           placeholder="닉네임을 입력해주세요"
-          value={value}
-          onChange={onChange}
+          value={nickname}
+          onChange={(value) => setField("nickname", value)}
         />
         <Requirement informationText="영문·한글·숫자 2~20자 이내" />
         <ErrorMessage text={errorMessage} />

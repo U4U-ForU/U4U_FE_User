@@ -3,31 +3,28 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import Button from "@/src/shared/ui/Button";
-import Input from "@/src/features/signup/ui/Input";
-import Requirement from "@/src/features/signup/ui/Requirement";
-import Title from "@/src/features/signup/ui/Title";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
+import Input from "@/src/features/signup/ui/Input";
+import Question from "@/src/features/signup/ui/Question";
+import Requirement from "@/src/features/signup/ui/Requirement";
+import Title from "@/src/features/signup/ui/Title";
 import { validateId } from "@/src/features/signup/model/validate";
-import Question from "../Question";
+import { useSignupStore } from "@/src/features/signup/model/signupStore";
 
-interface IdProps {
-  value: string;
-  onChange: (value: string) => void;
-  onNext: () => void;
-}
-
-export default function Id({ value, onChange, onNext }: IdProps) {
+export default function IdPage() {
+  const id = useSignupStore((state) => state.form.id);
+  const setField = useSignupStore((state) => state.setField);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const errorMessage = isSubmitted ? validateId(value) : "";
+  const errorMessage = isSubmitted ? validateId(id) : "";
 
-  const handleNext = () => {
+  const handleSubmit = () => {
     setIsSubmitted(true);
 
-    if (validateId(value) !== "") return;
+    if (validateId(id) !== "") return;
 
-    onNext();
+    //회원가입 API 호출, 로그인 화면으로 이동
   };
 
   return (
@@ -37,8 +34,8 @@ export default function Id({ value, onChange, onNext }: IdProps) {
       <Field>
         <Input
           placeholder="아이디를 입력해주세요"
-          value={value}
-          onChange={onChange}
+          value={id}
+          onChange={(value) => setField("id", value)}
         />
         <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
         <ErrorMessage text={errorMessage} />
@@ -51,7 +48,7 @@ export default function Id({ value, onChange, onNext }: IdProps) {
           borderColor="#DFAFAF"
           boxShadow={false}
           fontBorderColor="#C57373"
-          onClick={handleNext}
+          onClick={handleSubmit}
         />
         <Question text="회원가입" />
       </BottomArea>

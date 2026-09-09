@@ -1,32 +1,31 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "@/src/shared/ui/Button";
+import BottomArea from "@/src/features/signup/ui/BottomArea";
+import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
 import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Title from "@/src/features/signup/ui/Title";
-import BottomArea from "@/src/features/signup/ui/BottomArea";
-import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
 import { validateEmail } from "@/src/features/signup/model/validate";
+import { useSignupStore } from "@/src/features/signup/model/signupStore";
 
-interface EmailProps {
-  value: string;
-  onChange: (value: string) => void;
-  onNext: () => void;
-}
-
-export default function Email({ value, onChange, onNext }: EmailProps) {
+export default function EmailPage() {
+  const router = useRouter();
+  const email = useSignupStore((state) => state.form.email);
+  const setField = useSignupStore((state) => state.setField);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const errorMessage = isSubmitted ? validateEmail(value) : "";
+  const errorMessage = isSubmitted ? validateEmail(email) : "";
 
   const handleNext = () => {
     setIsSubmitted(true);
 
-    if (validateEmail(value) !== "") return;
+    if (validateEmail(email) !== "") return;
 
-    onNext();
+    router.push("/signup/password");
   };
 
   return (
@@ -36,8 +35,8 @@ export default function Email({ value, onChange, onNext }: EmailProps) {
       <Field>
         <Input
           placeholder="이메일을 입력해주세요."
-          value={value}
-          onChange={onChange}
+          value={email}
+          onChange={(value) => setField("email", value)}
         />
         <ErrorMessage text={errorMessage} />
       </Field>

@@ -1,57 +1,48 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "@/src/shared/ui/Button";
-import Input from "@/src/features/signup/ui/Input";
-import Requirement from "@/src/features/signup/ui/Requirement";
-import Title from "@/src/features/signup/ui/Title";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
+import Input from "@/src/features/signup/ui/Input";
+import Question from "@/src/features/signup/ui/Question";
+import Requirement from "@/src/features/signup/ui/Requirement";
+import Title from "@/src/features/signup/ui/Title";
 import {
   validatePassword,
   validatePasswordConfirm,
 } from "@/src/features/signup/model/validate";
-import Question from "../Question";
+import { useSignupStore } from "@/src/features/signup/model/signupStore";
 
-interface PasswordProps {
-  value: string;
-  onChange: (value: string) => void;
-  confirmValue: string;
-  onConfirmChange: (value: string) => void;
-  onNext: () => void;
-}
-
-export default function Password({
-  value,
-  onChange,
-  confirmValue,
-  onConfirmChange,
-  onNext,
-}: PasswordProps) {
+export default function PasswordPage() {
+  const router = useRouter();
+  const password = useSignupStore((state) => state.form.password);
+  const passwordConfirm = useSignupStore((state) => state.form.passwordConfirm);
+  const setField = useSignupStore((state) => state.setField);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const errorMessage = (() => {
-    const isMismatched = confirmValue !== "" && value !== confirmValue;
+    const isMismatched = passwordConfirm !== "" && password !== passwordConfirm;
 
-    // 두 값이 다르면 형식에도 어긋났는지와 무관하게 불일치를 먼저 알린다.
-    // 재입력을 시작한 뒤에는 다음을 누르기 전에도 바로 표시된다.
-    if (isMismatched) return validatePasswordConfirm(value, confirmValue);
+    if (isMismatched) return validatePasswordConfirm(password, passwordConfirm);
 
     if (!isSubmitted) return "";
 
     return (
-      validatePassword(value) || validatePasswordConfirm(value, confirmValue)
+      validatePassword(password) ||
+      validatePasswordConfirm(password, passwordConfirm)
     );
   })();
 
   const handleNext = () => {
     setIsSubmitted(true);
 
-    if (validatePassword(value) !== "") return;
-    if (validatePasswordConfirm(value, confirmValue) !== "") return;
+    if (validatePassword(password) !== "") return;
+    if (validatePasswordConfirm(password, passwordConfirm) !== "") return;
 
-    onNext();
+    router.push("/signup/nickname");
   };
 
   return (
@@ -63,14 +54,14 @@ export default function Password({
           <Input
             type="password"
             placeholder="비밀번호를 입력해주세요."
-            value={value}
-            onChange={onChange}
+            value={password}
+            onChange={(value) => setField("password", value)}
           />
           <Input
             type="password"
             placeholder="비밀번호를 다시 입력해주세요."
-            value={confirmValue}
-            onChange={onConfirmChange}
+            value={passwordConfirm}
+            onChange={(value) => setField("passwordConfirm", value)}
           />
         </Inputs>
         <Requirement informationText="영문, 숫자, 특수문자를 포함하여 8~20자 이내" />
