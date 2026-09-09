@@ -9,6 +9,7 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["192.168.1.30"],
   // Development keeps Next.js 16's default Turbopack. The production build
   // explicitly uses Webpack because @ducanh2912/next-pwa is a Webpack plugin.
   turbopack: {},
@@ -31,5 +32,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default
-  process.env.NODE_ENV === "development" ? nextConfig : withPWA(nextConfig);
+export default process.env.NODE_ENV === "development"
+  ? nextConfig
+  : withPWA(nextConfig);
