@@ -16,15 +16,23 @@ export default function IdPage() {
   const id = useSignupStore((state) => state.form.id);
   const setField = useSignupStore((state) => state.setField);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const errorMessage = isSubmitted ? validateId(id) : "";
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSubmitted(true);
 
+    if (isSubmitting) return;
     if (validateId(id) !== "") return;
 
-    //회원가입 API 호출, 로그인 화면으로 이동
+    setIsSubmitting(true);
+
+    try {
+      //회원가입 API 호출, 성공하면 reset() 후 로그인 화면으로 이동
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -42,13 +50,14 @@ export default function IdPage() {
       </Field>
       <BottomArea>
         <Button
-          text="가입하기"
+          text={isSubmitting ? "가입 중" : "가입하기"}
           fontColor="#FFF"
           backgroundColor="#FFD3D3"
           borderColor="#DFAFAF"
           boxShadow={false}
           fontBorderColor="#C57373"
           onClick={handleSubmit}
+          disabled={isSubmitting}
         />
         <Question text="회원가입" />
       </BottomArea>
