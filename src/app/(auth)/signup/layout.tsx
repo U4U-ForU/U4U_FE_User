@@ -3,21 +3,52 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 import { useSignupStore } from "@/src/features/signup/model/signupStore";
+import {
+  validateEmail,
+  validateNickname,
+  validatePassword,
+  validatePasswordConfirm,
+} from "@/src/features/signup/model/validate";
 
-const FIRST_STEP = "/signup/email";
+const STEPS = ["email", "password", "nickname", "id"] as const;
+
+type Step = (typeof STEPS)[number];
+
+function isStepDone(step: Step) {
+  const { form } = useSignupStore.getState();
+
+  switch (step) {
+    case "email":
+      return validateEmail(form.email) === "";
+    case "password":
+      return (
+        validatePassword(form.password) === "" &&
+        validatePasswordConfirm(form.password, form.passwordConfirm) === ""
+      );
+    case "nickname":
+      return validateNickname(form.nickname) === "";
+    case "id":
+      return true;
+  }
+}
 
 export default function SignupLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isDirectEntry =
-    pathname !== FIRST_STEP && useSignupStore.getState().form.email === "";
+  const currentStep = STEPS.find((step) => pathname === `/signup/${step}`);
+
+  const unfinishedStep = currentStep
+    ? STEPS.slice(0, STEPS.indexOf(currentStep)).find(
+        (step) => !isStepDone(step),
+      )
+    : undefined;
 
   useEffect(() => {
-    if (!isDirectEntry) return;
+    if (!unfinishedStep) return;
 
-    router.replace(FIRST_STEP);
-  }, [isDirectEntry, router]);
+    router.replace(`/signup/${unfinishedStep}`);
+  }, [unfinishedStep, router]);
 
-  return isDirectEntry ? null : children;
+  return unfinishedStep ? null : children;
 }
