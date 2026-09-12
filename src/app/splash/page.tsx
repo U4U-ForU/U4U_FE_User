@@ -16,7 +16,6 @@ export default function Splash() {
 
   return (
     <Wrapper>
-      <Background />
       <Logo
         src="/img/info/logo.png"
         alt="U4U"
@@ -34,18 +33,6 @@ const Wrapper = styled.div`
   height: 100dvh;
   justify-content: center;
   align-items: center;
-`;
-
-const Background = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background-color: #ffe4e4;
-  background-image: url("/img/background/50.png");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: cover;
-  pointer-events: none;
 `;
 
 const Logo = styled(Image)`
