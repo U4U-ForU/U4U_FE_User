@@ -23,6 +23,16 @@ body {
 body {
   min-height: 100dvh;
   font-family: Pretendard, "Apple SD Gothic Neo", system-ui, sans-serif;
+
+  /* 앱 공통 배경. body에 걸면 393px 프레임 바깥까지 덮는다. */
+  background-color: #ffe4e4;
+  background-image: url("/img/background/50.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+
+  /* body의 overflow는 뷰포트로 전파되어 position: fixed 요소를 자르지 않는다. */
+  overflow: hidden;
 }
 
 .app-content {

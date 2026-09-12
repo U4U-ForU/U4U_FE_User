@@ -11,12 +11,15 @@ import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
 import { validateId } from "@/src/features/signup/model/validate";
 import { useSignupStore } from "@/src/features/signup/model/signupStore";
+import { useRouter } from "next/navigation";
 
 export default function IdPage() {
   const id = useSignupStore((state) => state.form.id);
   const setField = useSignupStore((state) => state.setField);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
 
   const errorMessage = isSubmitted ? validateId(id) : "";
 
@@ -28,11 +31,8 @@ export default function IdPage() {
 
     setIsSubmitting(true);
 
-    try {
-      //회원가입 API 호출, 성공하면 reset() 후 로그인 화면으로 이동
-    } finally {
-      setIsSubmitting(false);
-    }
+    //회원가입 api 성공 시
+    router.push("/login");
   };
 
   return (
