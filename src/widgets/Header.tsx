@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import Coin from "../entities/user/ui/Coin";
 import UserProfile from "../entities/user/ui/Profile";
 
-export default function Header() {
+export default function MainHeader() {
   return (
     <Wrapper>
       <Coin coin={100} />
