@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "../../widgets/Header";
+import MainHeader from "../../widgets/Header";
 import Button from "../../shared/ui/Button";
 import Image from "next/image";
 import styled from "@emotion/styled";
@@ -12,7 +12,7 @@ export default function Main() {
     <Page>
       <BgBottom />
       <Foreground>
-        <Header />
+        <MainHeader />
       </Foreground>
       <DailyCheck />
       <MainMenuItemList />
