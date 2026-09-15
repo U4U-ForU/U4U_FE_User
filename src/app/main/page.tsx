@@ -38,7 +38,7 @@ const Page = styled.div`
   position: relative;
   width: 100%;
   min-height: 100dvh;
-  padding: 15px 20px;
+  padding: calc(15px + env(safe-area-inset-top)) 20px 20px;
   overflow: hidden;
 `;
 
