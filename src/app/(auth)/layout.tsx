@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   height: 100dvh;
-  padding: 40px 20px
+  padding: calc(40px + env(safe-area-inset-top)) 20px
     calc(${BOTTOM_AREA_HEIGHT}px + 24px + env(safe-area-inset-bottom));
   flex-direction: column;
 `;
