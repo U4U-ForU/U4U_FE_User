@@ -1,32 +1,32 @@
-import FilterBox from "./FilterBox";
 import styled from "@emotion/styled";
+import FilterBox from "./FilterBox";
+import type { ItemFilter } from "@/src/entities/item/model/types";
+
+const FILTERS: ItemFilter[] = ["전체", "보유", "예약"];
 
 interface FilterBoxListProps {
-  FilteringName: "전체" | "보유" | "예약";
+  value: ItemFilter;
+  onChange: (value: ItemFilter) => void;
 }
 
-export default function FilterBoxList({ FilteringName }: FilterBoxListProps) {
+export default function FilterBoxList({ value, onChange }: FilterBoxListProps) {
   return (
     <Wrapper>
-      <FilterBox
-        text="전체"
-        isActive={FilteringName === "전체" ? true : false}
-      />
-      <FilterBox
-        text="보유"
-        isActive={FilteringName === "보유" ? true : false}
-      />
-      <FilterBox
-        text="예약"
-        isActive={FilteringName === "예약" ? true : false}
-      />
+      {FILTERS.map((filter) => (
+        <FilterBox
+          key={filter}
+          text={filter}
+          isActive={filter === value}
+          onClick={() => onChange(filter)}
+        />
+      ))}
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   display: flex;
-  width: 393px;
+  width: 100%;
   padding: var(--space-16, 16px) 20px;
   justify-content: center;
   align-items: center;

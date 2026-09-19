@@ -13,7 +13,6 @@ const Text = styled.p`
   text-align: center;
   white-space: pre-line;
 
-  /* body/body-medium */
   font-family: Pretendard;
   font-size: var(--typo-body-medium, 16px);
   font-style: normal;
