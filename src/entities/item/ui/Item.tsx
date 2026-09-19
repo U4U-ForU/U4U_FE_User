@@ -3,14 +3,22 @@ import styled from "@emotion/styled";
 
 interface ItemProps {
   itemName: string;
-  itemCount: number;
+  itemCount?: number;
+}
+
+function formatCount(count: number) {
+  if (count < 1000) return String(count);
+
+  if (count >= 10000) return `${Math.floor(count / 1000)}k`;
+
+  return `${Math.floor(count / 100) / 10}k`;
 }
 
 export default function Item({ itemName, itemCount }: ItemProps) {
   return (
     <Wrapper>
       <TopWrapper>
-        <ItemCount>{itemCount}</ItemCount>
+        {itemCount ? <ItemCount>{formatCount(itemCount)}</ItemCount> : ""}
         <Image
           src={"/tempImg/tempItemImg.png"}
           width={58}
@@ -42,7 +50,8 @@ const ItemCount = styled.div`
   top: -12px;
   left: 0;
   transform: translateX(-50%);
-
+  min-width: 40px;
+  font-variant-numeric: tabular-nums;
   font-family: Pretendard;
   font-size: var(--typo-body-xsmaill, 12px);
   font-style: normal;
@@ -53,7 +62,8 @@ const ItemCount = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: 12px 12px 24px 12px;
+  align-self: flex-start;
 `;
 
 const ItemName = styled.div`
