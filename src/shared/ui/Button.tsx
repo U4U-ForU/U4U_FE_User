@@ -11,6 +11,7 @@ interface ButtonProps {
   boxShadow?: boolean;
   onClick?: () => void;
   disabled?: boolean;
+  className?: string;
 }
 
 export default function Button({
@@ -22,10 +23,12 @@ export default function Button({
   boxShadow = true,
   onClick,
   disabled = false,
+  className,
 }: ButtonProps) {
   return (
     <Wrapper
       type="button"
+      className={className}
       onClick={onClick}
       disabled={disabled}
       $backgroundColor={backgroundColor}
@@ -60,7 +63,6 @@ const Wrapper = styled.button<{
     $boxShadow
       ? "0 4px 6px 0 var(--color-opacity-black-15, rgba(0, 0, 0, 0.15))"
       : "none"};
-
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
