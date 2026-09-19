@@ -26,6 +26,7 @@ export default function FilterBoxList({ value, onChange }: FilterBoxListProps) {
 
 const Wrapper = styled.div`
   display: flex;
+  margin-top: 16px;
   width: 100%;
   padding: var(--space-16, 16px) 20px;
   justify-content: center;
