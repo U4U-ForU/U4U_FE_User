@@ -9,6 +9,14 @@ export default function EmptyList({ text }: EmptyListProps) {
 }
 
 const Text = styled.p`
+  position: fixed;
+  inset: 0;
+  display: flex;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+
   color: var(--color-gray-600, #868e96);
   text-align: center;
   white-space: pre-line;

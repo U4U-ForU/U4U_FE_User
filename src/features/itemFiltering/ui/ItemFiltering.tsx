@@ -8,9 +8,9 @@ import type {
 } from "@/src/entities/item/model/types";
 
 const EMPTY_MESSAGE: Record<ItemFilter, string> = {
-  전체: "아직 아이템이 없어요",
-  보유: "보유 중인 아이템이 없어요",
-  예약: "예약한 아이템이 없어요",
+  전체: "보유/예약 중인 아이템이 없습니다.",
+  보유: "보유 중인 아이템이 없습니다.",
+  예약: "예약 중인 아이템이 없습니다.",
 };
 
 interface ItemFilteringProps {
