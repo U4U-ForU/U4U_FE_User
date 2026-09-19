@@ -8,3 +8,12 @@ export interface InventoryItem {
   count?: number;
   status: ItemStatus;
 }
+
+export interface ItemModalProps {
+  maker: string;
+  img: string;
+  itemName: string;
+  itemCount?: number;
+  itemDescription: string;
+  onClose: () => void;
+}

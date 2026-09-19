@@ -1,20 +1,43 @@
 import styled from "@emotion/styled";
 import Item from "./Item";
 import type { InventoryItem } from "../model/types";
+import { useState } from "react";
+import Modal from "@/src/shared/ui/Modal";
+import ItemModal from "./ItemModal";
 
 interface ItemListProps {
   items: InventoryItem[];
 }
 
 export default function ItemList({ items }: ItemListProps) {
+  const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
+
   return (
-    <Scroller>
-      <ListBox>
-        {items.map((item) => (
-          <Item key={item.id} itemName={item.name} itemCount={item.count} />
-        ))}
-      </ListBox>
-    </Scroller>
+    <>
+      <Scroller>
+        <ListBox>
+          {items.map((item) => (
+            <Item
+              key={item.id}
+              itemName={item.name}
+              itemCount={item.count}
+              onClick={() => setSelectedItem(item)}
+            />
+          ))}
+        </ListBox>
+      </Scroller>
+
+      <Modal isOpen={selectedItem !== null}>
+        <ItemModal
+          onClose={() => setSelectedItem(null)}
+          maker="maremare"
+          img="/tempImg/tempItemImg.png"
+          itemName={selectedItem?.name ?? ""}
+          itemCount={selectedItem?.count}
+          itemDescription="푹신한 핑크빛 젤리가 콕 박힌 귀여운 냥이 장갑! 착용하면 냥냥 펀치의 파워가 업! 심쿵 주의 귀여움으로 적의 마음을 스르륵 녹여 공격력을 살짝 낮춰버려요.푹신한 핑크빛 젤리가 콕 박힌 귀여운 냥이 장갑! 착용하면 냥냥 펀치의 파워가 업! 심쿵 주의 귀여움으로 적의 마음을 스르륵 녹여 공격력을 살짝 낮춰버려요.ㄴ"
+        />
+      </Modal>
+    </>
   );
 }
 
