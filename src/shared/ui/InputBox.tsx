@@ -1,27 +1,32 @@
 "use client";
 
 import styled from "@emotion/styled";
-import { useState } from "react";
 
 interface InputBoxProps {
+  label: string;
   placeholder: string;
   height: number;
   maxLength: number;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export default function InputBox({
+  label,
   placeholder,
   height,
   maxLength,
+  value,
+  onChange,
 }: InputBoxProps) {
-  const [length, setLength] = useState(0);
-
   return (
     <Wrapper>
       <Field
+        aria-label={label}
         placeholder={placeholder}
         maxLength={maxLength}
-        onChange={(event) => setLength(event.target.value.length)}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
         $height={height}
       />
     </Wrapper>
@@ -49,4 +54,9 @@ const Field = styled.textarea<{ $height: number }>`
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
+
+  &:focus-visible {
+    outline: 2px solid var(--pink-p3, #dfafaf);
+    outline-offset: 2px;
+  }
 `;
