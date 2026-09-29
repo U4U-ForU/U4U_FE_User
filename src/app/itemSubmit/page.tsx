@@ -5,24 +5,44 @@ import InputBox from "@/src/shared/ui/InputBox";
 import ImageUploadBox from "@/src/shared/ui/ImgUploadBox";
 import Button from "@/src/shared/ui/Button";
 import styled from "@emotion/styled";
+import { useState } from "react";
 
 export default function ItemSubmit() {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [itemName, setItemName] = useState("");
+  const [itemDescription, setItemDescription] = useState("");
+
+  const canSubmit =
+    imageFile !== null &&
+    itemName.trim() !== "" &&
+    itemDescription.trim() !== "";
+
+  const handleSubmit = () => {
+    if (!canSubmit) return;
+  };
+
   return (
     <Wrapper>
       <Header title="아이템 제출" />
       <UploadArea>
-        <ImageUploadBox />
+        <ImageUploadBox onChange={setImageFile} />
       </UploadArea>
       <InputWrapper>
         <InputBox
+          label="아이템 이름"
           placeholder="아이템 이름을 입력해주세요"
           height={48}
           maxLength={15}
+          value={itemName}
+          onChange={setItemName}
         />
         <InputBox
+          label="아이템 설명"
           placeholder="아이템 설명을 입력해주세요"
           height={160}
           maxLength={200}
+          value={itemDescription}
+          onChange={setItemDescription}
         />
       </InputWrapper>
       <Button
@@ -32,6 +52,8 @@ export default function ItemSubmit() {
         backgroundColor="#FFD0D0"
         borderColor="#DFAFAF"
         boxShadow={false}
+        onClick={handleSubmit}
+        disabled={!canSubmit}
       />
     </Wrapper>
   );
