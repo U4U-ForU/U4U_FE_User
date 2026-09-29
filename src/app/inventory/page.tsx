@@ -17,7 +17,7 @@ export default function Inventory() {
 }
 
 const inventoryBackground = css`
-  body {
+  .app-background {
     background-image: url("/img/background/100.png");
   }
 `;

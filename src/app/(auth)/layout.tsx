@@ -1,15 +1,20 @@
 "use client";
 
 import styled from "@emotion/styled";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { BOTTOM_AREA_HEIGHT } from "@/src/features/signup/ui/BottomArea";
 
-/**
- * 로그인·회원가입 화면이 공통으로 쓰는 여백.
- * 하단에 고정된 버튼 영역만큼 아래 여백을 확보해 콘텐츠가 가리지 않게 한다.
- * 배경과 스크롤 잠금은 global.css가 모든 페이지에 적용한다.
- */
 export default function AuthLayout({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
   return <Wrapper>{children}</Wrapper>;
 }
 
