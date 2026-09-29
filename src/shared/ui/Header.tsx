@@ -26,6 +26,7 @@ export default function ProfileHeader({
 const Top = styled.div`
   display: flex;
   position: relative;
+  align-self: stretch;
   flex-direction: row;
   align-items: center;
   margin: calc(15px + env(safe-area-inset-top)) 20px 0;
