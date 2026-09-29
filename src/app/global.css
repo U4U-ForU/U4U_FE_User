@@ -24,7 +24,6 @@ body {
   min-height: 100dvh;
   font-family: Pretendard, "Apple SD Gothic Neo", system-ui, sans-serif;
   background-color: #ffe4e4;
-  overflow: hidden;
 }
 
 .app-background {
