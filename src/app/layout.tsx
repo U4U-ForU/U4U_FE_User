@@ -34,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="antialiased">
+        <div className="app-background" />
         <main className="app-content">{children}</main>
       </body>
     </html>
