@@ -48,6 +48,7 @@ const Wrapper = styled.button<{
   $boxShadow?: boolean;
 }>`
   display: flex;
+  z-index: 99999;
   width: min(353px, calc(100% - 32px));
   height: 64px;
   padding: 12px 24px;
