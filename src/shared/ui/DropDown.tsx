@@ -10,38 +10,40 @@ export default function DropDown() {
   const [selected, setSelected] = useState("전체");
 
   return (
-    <Wrapper>
-      <Trigger
-        type="button"
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen((prev) => !prev)}
-      >
-        <Option>{selected}</Option>
-        <Icon>
-          <img src="/img/dropdown/icon/UI_actions/Vector.svg" alt="" />
-        </Icon>
-      </Trigger>
+    <Wrapperr>
+      <Wrapper>
+        <Trigger
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
+          <Option>{selected}</Option>
+          <Icon>
+            <img src="/img/dropdown/icon/UI_actions/Vector.svg" alt="" />
+          </Icon>
+        </Trigger>
 
-      {isOpen && (
-        <List role="listbox">
-          {OPTIONS.map((option) => (
-            <Item
-              key={option}
-              type="button"
-              role="option"
-              aria-selected={selected === option}
-              onClick={() => {
-                setSelected(option);
-                setIsOpen(false);
-              }}
-            >
-              {option}
-            </Item>
-          ))}
-        </List>
-      )}
-    </Wrapper>
+        {isOpen && (
+          <List role="listbox">
+            {OPTIONS.map((option) => (
+              <Item
+                key={option}
+                type="button"
+                role="option"
+                aria-selected={selected === option}
+                onClick={() => {
+                  setSelected(option);
+                  setIsOpen(false);
+                }}
+              >
+                {option}
+              </Item>
+            ))}
+          </List>
+        )}
+      </Wrapper>
+    </Wrapperr>
   );
 }
 
@@ -49,6 +51,17 @@ const Wrapper = styled.div`
   position: relative;
   width: fit-content;
   min-width: 131px;
+`;
+
+const Wrapperr = styled.div`
+  display: flex;
+  margin-top: var(--space-16, 16px);
+  width: 393px;
+  padding: var(--space-16, 16px) 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
 `;
 
 const Trigger = styled.button`
@@ -81,13 +94,13 @@ const Icon = styled.div``;
 const List = styled.div`
   position: absolute;
   top: calc(100% + 4px);
-  left: 0;
+  right: 0;
   z-index: 1;
   display: flex;
   flex-direction: column;
   min-width: 100%;
   width: max-content;
-  border-radius: var(--radius-md, 12px);
+  border-radius: 12px;
   border: 2px solid var(--color-gray-500, #adb5bd);
   background: #fff;
   overflow: hidden;
