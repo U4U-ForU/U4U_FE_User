@@ -1,13 +1,14 @@
 "use client";
 
 import styled from "@emotion/styled";
+import type { SubmitStatus } from "../model/types";
 import Image from "next/image";
 import CloseButton from "@/src/shared/ui/CloseButton";
 import Button from "@/src/shared/ui/Button";
 import SubmitStatusBadge from "./SubmitStatusBadge";
 
 interface SubmitItemModalProps {
-  status: string;
+  status: SubmitStatus;
   itemName: string;
   itemDescription: string;
   submittedAt: string;

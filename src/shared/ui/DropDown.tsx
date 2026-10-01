@@ -3,11 +3,18 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 
-const OPTIONS = ["전체", "미승인", "승인거절", "조합아이템 승인", "승인완료"];
+interface DropDownProps<T extends string> {
+  options: readonly T[];
+  value: T;
+  onChange: (value: T) => void;
+}
 
-export default function DropDown() {
+export default function DropDown<T extends string>({
+  options,
+  value,
+  onChange,
+}: DropDownProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("전체");
 
   return (
     <Wrapperr>
@@ -18,7 +25,7 @@ export default function DropDown() {
           aria-expanded={isOpen}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <Option>{selected}</Option>
+          <Option>{value}</Option>
           <Icon>
             <img src="/img/dropdown/icon/UI_actions/Vector.svg" alt="" />
           </Icon>
@@ -26,14 +33,14 @@ export default function DropDown() {
 
         {isOpen && (
           <List role="listbox">
-            {OPTIONS.map((option) => (
+            {options.map((option) => (
               <Item
                 key={option}
                 type="button"
                 role="option"
-                aria-selected={selected === option}
+                aria-selected={value === option}
                 onClick={() => {
-                  setSelected(option);
+                  onChange(option);
                   setIsOpen(false);
                 }}
               >

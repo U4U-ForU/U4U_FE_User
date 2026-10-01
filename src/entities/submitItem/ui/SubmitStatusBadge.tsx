@@ -2,9 +2,10 @@
 
 import styled from "@emotion/styled";
 import { STATUS_BACKGROUNDS, STATUS_ICONS } from "../model/status";
+import type { SubmitStatus } from "../model/types";
 
 interface SubmitStatusBadgeProps {
-  status: string;
+  status: SubmitStatus;
   className?: string;
 }
 

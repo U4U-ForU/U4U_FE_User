@@ -1,10 +1,10 @@
 "use client";
 
 import styled from "@emotion/styled";
-import DropDown from "@/src/shared/ui/DropDown";
 import ProfileHeader from "@/src/shared/ui/Header";
 import Button from "@/src/shared/ui/Button";
-import SubmitItemList from "@/src/entities/submitItem/ui/SubmitItemList";
+import SubmitItemFiltering from "@/src/features/submitItemFiltering";
+import { MOCK_SUBMIT_ITEMS } from "@/src/entities/submitItem/model/mockSubmitItems";
 import { useRouter } from "next/navigation";
 
 export default function page() {
@@ -14,8 +14,7 @@ export default function page() {
     <Wrapper>
       <PageBackground aria-hidden="true" />
       <ProfileHeader title="아이템 제출 목록" />
-      <DropDown />
-      <SubmitItemList />
+      <SubmitItemFiltering items={MOCK_SUBMIT_ITEMS} />
       <BottomArea>
         <Button
           text="아이템 제출"

@@ -1,29 +1,23 @@
-import SubmitItem from "./SubmitItem";
 import styled from "@emotion/styled";
+import SubmitItem from "./SubmitItem";
+import type { SubmittedItem } from "../model/types";
 
-export default function SubmitItemList() {
+interface SubmitItemListProps {
+  items: SubmittedItem[];
+}
+
+export default function SubmitItemList({ items }: SubmitItemListProps) {
   return (
     <Wrapper>
-      <SubmitItem status="미승인" itemName="앙녕핫세요" />
-      <SubmitItem
-        status="승인거절"
-        itemName="앙녕핫세요앙녕핫세 요앙녕핫세요"
-      />
-      <SubmitItem status="조합아이템 승인" itemName="앙녕핫세요 앙녕핫세요" />
-      <SubmitItem
-        status="승인완료"
-        itemName="앙녕핫세요앙녕핫세요앙녕핫세요앙녕핫세요앙녕핫세요"
-      />
-      <SubmitItem status="미승인" itemName="앙녕핫세요" />
-      <SubmitItem
-        status="승인거절"
-        itemName="앙녕핫세요앙녕핫세 요앙녕핫세요"
-      />
-      <SubmitItem status="조합아이템 승인" itemName="앙녕핫세요 앙녕핫세요" />
-      <SubmitItem
-        status="승인완료"
-        itemName="앙녕핫세요앙녕핫세요앙녕핫세요앙녕핫세요앙녕핫세요"
-      />
+      {items.map((item) => (
+        <SubmitItem
+          key={item.id}
+          status={item.status}
+          itemName={item.itemName}
+          itemDescription={item.itemDescription}
+          submittedAt={item.submittedAt}
+        />
+      ))}
     </Wrapper>
   );
 }

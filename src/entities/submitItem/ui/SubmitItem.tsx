@@ -1,13 +1,14 @@
 "use client";
 
 import styled from "@emotion/styled";
+import type { SubmitStatus } from "../model/types";
 import { useState } from "react";
 import Modal from "@/src/shared/ui/Modal";
 import SubmitItemModal from "./SubmitItemModal";
 import SubmitStatusBadge from "./SubmitStatusBadge";
 
 interface SubmitItemProps {
-  status: string;
+  status: SubmitStatus;
   itemName: string;
   itemDescription: string;
   submittedAt: string;
