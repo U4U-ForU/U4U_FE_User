@@ -7,7 +7,7 @@ import SubmitItemFiltering from "@/src/features/submitItemFiltering";
 import { MOCK_SUBMIT_ITEMS } from "@/src/entities/submitItem/model/mockSubmitItems";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function ItemSubmitList() {
   const router = useRouter();
 
   return (
