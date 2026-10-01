@@ -30,7 +30,7 @@ export default function SubmitItem({
         <ItemName>{itemName}</ItemName>
       </Wrapper>
 
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <SubmitItemModal
           status={status}
           itemName={itemName}
