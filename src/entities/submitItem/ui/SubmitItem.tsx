@@ -1,68 +1,66 @@
+"use client";
+
 import styled from "@emotion/styled";
-
-const STATUS_ICONS: Record<string, string> = {
-  승인거절: "/submitStatus/reject.png",
-  "조합아이템 승인": "/submitStatus/comSuccess.png",
-  승인완료: "/submitStatus/success.png",
-};
-
-const STATUS_BACKGROUNDS: Record<string, string> = {
-  승인거절: "#E54D4D",
-  "조합아이템 승인": "#50B4DC",
-  승인완료: "#20AF61",
-};
+import { useState } from "react";
+import Modal from "@/src/shared/ui/Modal";
+import SubmitItemModal from "./SubmitItemModal";
+import SubmitStatusBadge from "./SubmitStatusBadge";
 
 interface SubmitItemProps {
   status: string;
   itemName: string;
+  itemDescription: string;
+  submittedAt: string;
 }
 
-export default function SubmitItem({ status, itemName }: SubmitItemProps) {
-  const icon = STATUS_ICONS[status];
+export default function SubmitItem({
+  status,
+  itemName,
+  itemDescription,
+  submittedAt,
+}: SubmitItemProps) {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Wrapper>
-      <Status $background={STATUS_BACKGROUNDS[status]}>
-        {icon && <StatusIcon src={icon} alt="" />}
-        {status}
-      </Status>
-      <Img src="/tempImg/tempItemImg.png"></Img>
-      <ItemName>{itemName}</ItemName>
-    </Wrapper>
+    <>
+      <Wrapper type="button" onClick={() => setIsOpen(true)}>
+        <Status status={status} />
+        <Img src="/tempImg/tempItemImg.png"></Img>
+        <ItemName>{itemName}</ItemName>
+      </Wrapper>
+
+      <Modal isOpen={isOpen}>
+        <SubmitItemModal
+          status={status}
+          itemName={itemName}
+          itemDescription={itemDescription}
+          submittedAt={submittedAt}
+          img="/tempImg/tempItemImg.png"
+          onClose={() => setIsOpen(false)}
+        />
+      </Modal>
+    </>
   );
 }
 
-const StatusIcon = styled.img`
-  flex-shrink: 0;
-  max-width: none;
-`;
-
-const Status = styled.div<{ $background?: string }>`
-  display: flex;
-  padding: 4px var(--space-8, 8px);
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  color: var(--color-gray-0, #fff);
-  font-family: Pretendard;
-  font-size: var(--typo-body-xsmaill, 12px);
-  font-style: normal;
-  width: fit-content;
-  font-weight: 600;
-  line-height: 150%; /* 18px */
-  border-radius: var(--radius-full, 999999px);
-  border: 1px solid var(--color-gray-0, #fff);
-  background: ${({ $background }) =>
-    $background ?? "var(--color-gray-600, #868e96)"};
+const Status = styled(SubmitStatusBadge)`
   margin-bottom: -16px;
   margin-left: -12px;
   position: relative;
   z-index: 1;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.button`
+  display: block;
+  width: 136px;
   height: 197px;
   margin: 0px 12px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const Img = styled.img`
