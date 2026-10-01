@@ -63,7 +63,8 @@ const Wrapper = styled.div`
 const Wrapperr = styled.div`
   display: flex;
   margin-top: var(--space-16, 16px);
-  width: 393px;
+  width: 100%;
+  max-width: 393px;
   padding: var(--space-16, 16px) 20px;
   flex-direction: column;
   justify-content: center;
