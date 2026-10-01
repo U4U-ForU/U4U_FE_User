@@ -95,7 +95,7 @@ const List = styled.div`
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
-  z-index: 1;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   min-width: 100%;
