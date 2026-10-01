@@ -27,7 +27,10 @@ export default function ItemList({ items }: ItemListProps) {
         </ListBox>
       </Scroller>
 
-      <Modal isOpen={selectedItem !== null}>
+      <Modal
+        isOpen={selectedItem !== null}
+        onClose={() => setSelectedItem(null)}
+      >
         <ItemModal
           onClose={() => setSelectedItem(null)}
           maker="maremare"

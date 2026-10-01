@@ -55,7 +55,7 @@ const Wrapper = styled.button<{
   align-items: center;
   gap: 10px;
   border-radius: 12px;
-  border: 2px solid ${({ $borderColor }) => $borderColor};
+  border: 2px solid ${({ $borderColor }) => $borderColor ?? "transparent"};
   background: ${({ $backgroundColor }) => $backgroundColor};
   cursor: pointer;
   transition: opacity 0.15s ease;

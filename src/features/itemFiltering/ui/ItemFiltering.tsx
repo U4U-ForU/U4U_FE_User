@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FilterBoxList from "./FilterBoxList";
-import EmptyList from "./EmptyList";
+import EmptyList from "@/src/shared/ui/EmptyList";
 import ItemList from "@/src/entities/item/ui/ItemList";
 import type {
   InventoryItem,
