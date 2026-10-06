@@ -3,6 +3,7 @@
 import styled from "@emotion/styled";
 import { useEffect, type ReactNode } from "react";
 import { BOTTOM_AREA_HEIGHT } from "@/src/features/signup/ui/BottomArea";
+import AuthGuard from "@/src/shared/ui/AuthGuard";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -15,7 +16,11 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  return <Wrapper>{children}</Wrapper>;
+  return (
+    <AuthGuard requireAuth={false} redirectTo="/main">
+      <Wrapper>{children}</Wrapper>
+    </AuthGuard>
+  );
 }
 
 const Wrapper = styled.div`
