@@ -10,14 +10,12 @@ import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Title from "@/src/features/signup/ui/Title";
 import { validateEmail } from "@/src/features/signup/model/validate";
-import { useSignupStore } from "@/src/features/signup/model/signupStore";
 
 export default function Login() {
   const router = useRouter();
-  const email = useSignupStore((state) => state.form.email);
-  const setField = useSignupStore((state) => state.setField);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const password = useSignupStore((state) => state.form.password);
 
   const errorMessage = (() => {
     if (!isSubmitted) return "";
@@ -46,13 +44,13 @@ export default function Login() {
         <Input
           placeholder="이메일을 입력해주세요."
           value={email}
-          onChange={(value) => setField("email", value)}
+          onChange={setEmail}
         />
         <Input
           placeholder="비밀번호를 입력해주세요."
           type="password"
           value={password}
-          onChange={(value) => setField("password", value)}
+          onChange={setPassword}
         />
         <ErrorMessage text={errorMessage} />
       </Field>

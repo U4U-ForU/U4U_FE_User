@@ -10,29 +10,27 @@ import Question from "@/src/features/signup/ui/Question";
 import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
 import { validateId } from "@/src/features/signup/model/validate";
-import { useSignupStore } from "@/src/features/signup/model/signupStore";
-import { useRouter } from "next/navigation";
+import { useSignupSubmit } from "@/src/features/signup/model/useSignupSubmit";
 
 export default function IdPage() {
-  const id = useSignupStore((state) => state.form.id);
-  const setField = useSignupStore((state) => state.setField);
+  const [id, setId] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { submit, isSubmitting, error, resetError } = useSignupSubmit();
 
-  const router = useRouter();
+  const errorMessage = (isSubmitted ? validateId(id) : "") || error;
 
-  const errorMessage = isSubmitted ? validateId(id) : "";
+  const handleChange = (value: string) => {
+    setId(value);
 
-  const handleSubmit = async () => {
+    if (error !== "") resetError();
+  };
+
+  const handleSubmit = () => {
     setIsSubmitted(true);
 
-    if (isSubmitting) return;
     if (validateId(id) !== "") return;
 
-    setIsSubmitting(true);
-
-    //회원가입 api 성공 시
-    router.push("/login");
+    submit(id);
   };
 
   return (
@@ -43,7 +41,7 @@ export default function IdPage() {
         <Input
           placeholder="아이디를 입력해주세요"
           value={id}
-          onChange={(value) => setField("id", value)}
+          onChange={handleChange}
         />
         <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
         <ErrorMessage text={errorMessage} />
