@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Button from "@/src/shared/ui/Button";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
@@ -25,7 +25,8 @@ export default function IdPage() {
     if (error !== "") resetError();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitted(true);
 
     if (validateId(id) !== "") return;
@@ -34,12 +35,14 @@ export default function IdPage() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleSubmit}>
       <Title text="로그인 시 사용될" />
       <Title text="아이디를 입력해주세요" />
       <Field>
         <Input
+          label="아이디"
           placeholder="아이디를 입력해주세요"
+          autoComplete="username"
           value={id}
           onChange={handleChange}
         />
@@ -48,13 +51,13 @@ export default function IdPage() {
       </Field>
       <BottomArea>
         <Button
+          type="submit"
           text={isSubmitting ? "가입 중" : "가입하기"}
           fontColor="#FFF"
           backgroundColor="#FFD3D3"
           borderColor="#DFAFAF"
           boxShadow={false}
           fontBorderColor="#C57373"
-          onClick={handleSubmit}
           disabled={isSubmitting}
         />
         <Question text="회원가입" />
@@ -63,7 +66,7 @@ export default function IdPage() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex: 1;
   flex-direction: column;

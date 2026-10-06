@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Button from "@/src/shared/ui/Button";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
@@ -42,7 +42,8 @@ export default function PasswordPage() {
     if (data.password !== "") save({ password: "" });
   };
 
-  const handleNext = () => {
+  const handleNext = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitted(true);
 
     if (validatePassword(password) !== "") return;
@@ -53,20 +54,24 @@ export default function PasswordPage() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleNext}>
       <Title text="비밀번호를" />
       <Title text="입력해주세요" />
       <Field>
         <Inputs>
           <Input
+            label="비밀번호"
             type="password"
             placeholder="비밀번호를 입력해주세요."
+            autoComplete="new-password"
             value={password}
             onChange={handlePasswordChange}
           />
           <Input
+            label="비밀번호 확인"
             type="password"
             placeholder="비밀번호를 다시 입력해주세요."
+            autoComplete="new-password"
             value={passwordConfirm}
             onChange={setPasswordConfirm}
           />
@@ -76,13 +81,13 @@ export default function PasswordPage() {
       </Field>
       <BottomArea>
         <Button
+          type="submit"
           text="다음"
           fontColor="#FFF"
           backgroundColor="#FFD3D3"
           borderColor="#DFAFAF"
           boxShadow={false}
           fontBorderColor="#C57373"
-          onClick={handleNext}
         />
         <Question text="회원가입" />
       </BottomArea>
@@ -90,7 +95,7 @@ export default function PasswordPage() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex: 1;
   flex-direction: column;

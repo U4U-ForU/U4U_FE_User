@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Button from "@/src/shared/ui/Button";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
@@ -26,7 +26,8 @@ export default function EmailPage() {
     if (data.email !== "") save({ email: "" });
   };
 
-  const handleNext = () => {
+  const handleNext = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitted(true);
 
     if (validateEmail(email) !== "") return;
@@ -36,12 +37,14 @@ export default function EmailPage() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleNext}>
       <Title text="이메일을" />
       <Title text="입력해주세요" />
       <Field>
         <Input
+          label="이메일"
           placeholder="이메일을 입력해주세요."
+          autoComplete="email"
           value={email}
           onChange={handleChange}
         />
@@ -49,13 +52,13 @@ export default function EmailPage() {
       </Field>
       <BottomArea>
         <Button
+          type="submit"
           text="다음"
           fontColor="#FFF"
           backgroundColor="#FFD3D3"
           borderColor="#DFAFAF"
           boxShadow={false}
           fontBorderColor="#C57373"
-          onClick={handleNext}
         />
         <Question text="회원가입" />
       </BottomArea>
@@ -63,7 +66,7 @@ export default function EmailPage() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex: 1;
   flex-direction: column;
