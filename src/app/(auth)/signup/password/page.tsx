@@ -14,13 +14,13 @@ import {
   validatePassword,
   validatePasswordConfirm,
 } from "@/src/features/signup/model/validate";
-import { useSignupStore } from "@/src/features/signup/model/signupStore";
+import { useSignupContext } from "@/src/features/signup/model/SignupContext";
 
 export default function PasswordPage() {
   const router = useRouter();
-  const password = useSignupStore((state) => state.form.password);
-  const passwordConfirm = useSignupStore((state) => state.form.passwordConfirm);
-  const setField = useSignupStore((state) => state.setField);
+  const { data, save } = useSignupContext();
+  const [password, setPassword] = useState(data.password);
+  const [passwordConfirm, setPasswordConfirm] = useState(data.password);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const errorMessage = (() => {
@@ -42,6 +42,7 @@ export default function PasswordPage() {
     if (validatePassword(password) !== "") return;
     if (validatePasswordConfirm(password, passwordConfirm) !== "") return;
 
+    save({ password });
     router.push("/signup/nickname");
   };
 
@@ -55,13 +56,13 @@ export default function PasswordPage() {
             type="password"
             placeholder="비밀번호를 입력해주세요."
             value={password}
-            onChange={(value) => setField("password", value)}
+            onChange={setPassword}
           />
           <Input
             type="password"
             placeholder="비밀번호를 다시 입력해주세요."
             value={passwordConfirm}
-            onChange={(value) => setField("passwordConfirm", value)}
+            onChange={setPasswordConfirm}
           />
         </Inputs>
         <Requirement informationText="영문, 숫자, 특수문자를 포함하여 8~20자 이내" />

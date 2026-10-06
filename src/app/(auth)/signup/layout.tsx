@@ -2,45 +2,44 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
-import { useSignupStore } from "@/src/features/signup/model/signupStore";
+import {
+  SignupProvider,
+  useSignupContext,
+  type SignupData,
+} from "@/src/features/signup/model/SignupContext";
 import {
   validateEmail,
   validateNickname,
   validatePassword,
-  validatePasswordConfirm,
 } from "@/src/features/signup/model/validate";
 
 const STEPS = ["email", "password", "nickname", "id"] as const;
 
 type Step = (typeof STEPS)[number];
 
-function isStepDone(step: Step) {
-  const { form } = useSignupStore.getState();
-
+function isStepDone(step: Step, data: SignupData) {
   switch (step) {
     case "email":
-      return validateEmail(form.email) === "";
+      return validateEmail(data.email) === "";
     case "password":
-      return (
-        validatePassword(form.password) === "" &&
-        validatePasswordConfirm(form.password, form.passwordConfirm) === ""
-      );
+      return validatePassword(data.password) === "";
     case "nickname":
-      return validateNickname(form.nickname) === "";
+      return validateNickname(data.nickname) === "";
     case "id":
       return true;
   }
 }
 
-export default function SignupLayout({ children }: { children: ReactNode }) {
+function StepGuard({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { data } = useSignupContext();
 
   const currentStep = STEPS.find((step) => pathname === `/signup/${step}`);
 
   const unfinishedStep = currentStep
     ? STEPS.slice(0, STEPS.indexOf(currentStep)).find(
-        (step) => !isStepDone(step),
+        (step) => !isStepDone(step, data),
       )
     : undefined;
 
@@ -51,4 +50,12 @@ export default function SignupLayout({ children }: { children: ReactNode }) {
   }, [unfinishedStep, router]);
 
   return unfinishedStep ? null : children;
+}
+
+export default function SignupLayout({ children }: { children: ReactNode }) {
+  return (
+    <SignupProvider>
+      <StepGuard>{children}</StepGuard>
+    </SignupProvider>
+  );
 }

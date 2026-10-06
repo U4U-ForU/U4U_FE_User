@@ -11,12 +11,12 @@ import Question from "@/src/features/signup/ui/Question";
 import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
 import { validateNickname } from "@/src/features/signup/model/validate";
-import { useSignupStore } from "@/src/features/signup/model/signupStore";
+import { useSignupContext } from "@/src/features/signup/model/SignupContext";
 
 export default function NicknamePage() {
   const router = useRouter();
-  const nickname = useSignupStore((state) => state.form.nickname);
-  const setField = useSignupStore((state) => state.setField);
+  const { data, save } = useSignupContext();
+  const [nickname, setNickname] = useState(data.nickname);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const errorMessage = isSubmitted ? validateNickname(nickname) : "";
@@ -26,6 +26,7 @@ export default function NicknamePage() {
 
     if (validateNickname(nickname) !== "") return;
 
+    save({ nickname });
     router.push("/signup/id");
   };
 
@@ -37,7 +38,7 @@ export default function NicknamePage() {
         <Input
           placeholder="닉네임을 입력해주세요"
           value={nickname}
-          onChange={(value) => setField("nickname", value)}
+          onChange={setNickname}
         />
         <Requirement informationText="영문·한글·숫자 2~20자 이내" />
         <ErrorMessage text={errorMessage} />

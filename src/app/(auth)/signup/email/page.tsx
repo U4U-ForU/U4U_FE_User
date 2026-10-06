@@ -10,12 +10,12 @@ import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Title from "@/src/features/signup/ui/Title";
 import { validateEmail } from "@/src/features/signup/model/validate";
-import { useSignupStore } from "@/src/features/signup/model/signupStore";
+import { useSignupContext } from "@/src/features/signup/model/SignupContext";
 
 export default function EmailPage() {
   const router = useRouter();
-  const email = useSignupStore((state) => state.form.email);
-  const setField = useSignupStore((state) => state.setField);
+  const { data, save } = useSignupContext();
+  const [email, setEmail] = useState(data.email);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const errorMessage = isSubmitted ? validateEmail(email) : "";
@@ -25,6 +25,7 @@ export default function EmailPage() {
 
     if (validateEmail(email) !== "") return;
 
+    save({ email });
     router.push("/signup/password");
   };
 
@@ -36,7 +37,7 @@ export default function EmailPage() {
         <Input
           placeholder="이메일을 입력해주세요."
           value={email}
-          onChange={(value) => setField("email", value)}
+          onChange={setEmail}
         />
         <ErrorMessage text={errorMessage} />
       </Field>

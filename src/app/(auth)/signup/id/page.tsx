@@ -10,29 +10,41 @@ import Question from "@/src/features/signup/ui/Question";
 import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
 import { validateId } from "@/src/features/signup/model/validate";
-import { useSignupStore } from "@/src/features/signup/model/signupStore";
+import { useSignupContext } from "@/src/features/signup/model/SignupContext";
+import { requestSignup } from "@/src/features/signup/api/signup";
 import { useRouter } from "next/navigation";
 
 export default function IdPage() {
-  const id = useSignupStore((state) => state.form.id);
-  const setField = useSignupStore((state) => state.setField);
+  const { data } = useSignupContext();
+  const [id, setId] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const router = useRouter();
 
-  const errorMessage = isSubmitted ? validateId(id) : "";
+  const errorMessage = (isSubmitted ? validateId(id) : "") || submitError;
 
   const handleSubmit = async () => {
     setIsSubmitted(true);
+    setSubmitError("");
 
     if (isSubmitting) return;
     if (validateId(id) !== "") return;
 
     setIsSubmitting(true);
 
-    //회원가입 api 성공 시
-    router.push("/login");
+    try {
+      await requestSignup({ ...data, loginId: id });
+      router.push("/login");
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.",
+      );
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -43,7 +55,7 @@ export default function IdPage() {
         <Input
           placeholder="아이디를 입력해주세요"
           value={id}
-          onChange={(value) => setField("id", value)}
+          onChange={setId}
         />
         <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
         <ErrorMessage text={errorMessage} />
