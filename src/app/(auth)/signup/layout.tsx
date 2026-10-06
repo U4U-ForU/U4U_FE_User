@@ -11,7 +11,7 @@ import {
   validateEmail,
   validateNickname,
   validatePassword,
-} from "@/src/features/signup/model/validate";
+} from "@/src/shared/lib/validate";
 
 const STEPS = ["email", "password", "nickname", "id"] as const;
 

@@ -9,7 +9,7 @@ import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
 import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Title from "@/src/features/signup/ui/Title";
-import { validateEmail } from "@/src/features/signup/model/validate";
+import { validateEmail } from "@/src/shared/lib/validate";
 import { useSignupContext } from "@/src/features/signup/model/SignupContext";
 
 export default function EmailPage() {

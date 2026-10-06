@@ -13,7 +13,7 @@ import Title from "@/src/features/signup/ui/Title";
 import {
   validatePassword,
   validatePasswordConfirm,
-} from "@/src/features/signup/model/validate";
+} from "@/src/shared/lib/validate";
 import { useSignupContext } from "@/src/features/signup/model/SignupContext";
 
 export default function PasswordPage() {

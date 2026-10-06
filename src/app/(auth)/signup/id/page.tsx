@@ -9,7 +9,7 @@ import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
-import { validateId } from "@/src/features/signup/model/validate";
+import { validateId } from "@/src/shared/lib/validate";
 import { useSignupSubmit } from "@/src/features/signup/model/useSignupSubmit";
 
 export default function IdPage() {

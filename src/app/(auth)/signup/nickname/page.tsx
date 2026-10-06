@@ -10,7 +10,7 @@ import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
-import { validateNickname } from "@/src/features/signup/model/validate";
+import { validateNickname } from "@/src/shared/lib/validate";
 import { useSignupContext } from "@/src/features/signup/model/SignupContext";
 
 export default function NicknamePage() {
