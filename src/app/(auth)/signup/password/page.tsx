@@ -36,6 +36,12 @@ export default function PasswordPage() {
     );
   })();
 
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+
+    if (data.password !== "") save({ password: "" });
+  };
+
   const handleNext = () => {
     setIsSubmitted(true);
 
@@ -56,7 +62,7 @@ export default function PasswordPage() {
             type="password"
             placeholder="비밀번호를 입력해주세요."
             value={password}
-            onChange={setPassword}
+            onChange={handlePasswordChange}
           />
           <Input
             type="password"

@@ -21,6 +21,12 @@ export default function NicknamePage() {
 
   const errorMessage = isSubmitted ? validateNickname(nickname) : "";
 
+  const handleChange = (value: string) => {
+    setNickname(value);
+
+    if (data.nickname !== "") save({ nickname: "" });
+  };
+
   const handleNext = () => {
     setIsSubmitted(true);
 
@@ -38,7 +44,7 @@ export default function NicknamePage() {
         <Input
           placeholder="닉네임을 입력해주세요"
           value={nickname}
-          onChange={setNickname}
+          onChange={handleChange}
         />
         <Requirement informationText="2자 이상 20자 이하" />
         <ErrorMessage text={errorMessage} />

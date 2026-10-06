@@ -20,6 +20,12 @@ export default function EmailPage() {
 
   const errorMessage = isSubmitted ? validateEmail(email) : "";
 
+  const handleChange = (value: string) => {
+    setEmail(value);
+
+    if (data.email !== "") save({ email: "" });
+  };
+
   const handleNext = () => {
     setIsSubmitted(true);
 
@@ -37,7 +43,7 @@ export default function EmailPage() {
         <Input
           placeholder="이메일을 입력해주세요."
           value={email}
-          onChange={setEmail}
+          onChange={handleChange}
         />
         <ErrorMessage text={errorMessage} />
       </Field>
