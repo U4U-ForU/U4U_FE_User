@@ -22,9 +22,23 @@ export function validatePasswordConfirm(value: string, confirmValue: string) {
   return "";
 }
 
+const segmenter =
+  typeof Intl !== "undefined" && "Segmenter" in Intl
+    ? new Intl.Segmenter("ko", { granularity: "grapheme" })
+    : null;
+
+function countCharacters(value: string) {
+  if (segmenter === null) return [...value].length;
+
+  return [...segmenter.segment(value)].length;
+}
+
 export function validateNickname(value: string) {
   if (value === "") return "닉네임을 입력해주세요.";
-  if (value.length < 2 || value.length > 20) {
+
+  const length = countCharacters(value);
+
+  if (length < 2 || length > 20) {
     return "2자 이상 20자 이하로 입력해주세요.";
   }
   return "";
