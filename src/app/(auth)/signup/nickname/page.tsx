@@ -40,7 +40,7 @@ export default function NicknamePage() {
           value={nickname}
           onChange={setNickname}
         />
-        <Requirement informationText="영문·한글·숫자 2~20자 이내" />
+        <Requirement informationText="2자 이상 20자 이하" />
         <ErrorMessage text={errorMessage} />
       </Field>
       <BottomArea>

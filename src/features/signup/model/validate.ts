@@ -1,6 +1,5 @@
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9\s])\S{8,20}$/;
-const NICKNAME = /^[A-Za-z0-9가-힣]{2,20}$/;
 const ID = /^[A-Za-z0-9]{4,20}$/;
 
 export function validateEmail(value: string) {
@@ -25,8 +24,9 @@ export function validatePasswordConfirm(value: string, confirmValue: string) {
 
 export function validateNickname(value: string) {
   if (value === "") return "닉네임을 입력해주세요.";
-  if (!NICKNAME.test(value))
-    return "영문·한글·숫자 2~20자 이내로 입력해주세요.";
+  if (value.length < 2 || value.length > 20) {
+    return "2자 이상 20자 이하로 입력해주세요.";
+  }
   return "";
 }
 
