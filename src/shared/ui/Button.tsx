@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 
 interface ButtonProps {
   text: string;
+  type?: "button" | "submit";
   fontColor: string;
   backgroundColor: string;
   borderColor?: string;
@@ -16,6 +17,7 @@ interface ButtonProps {
 
 export default function Button({
   text,
+  type = "button",
   fontColor,
   backgroundColor,
   borderColor,
@@ -27,7 +29,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <Wrapper
-      type="button"
+      type={type}
       className={className}
       onClick={onClick}
       disabled={disabled}

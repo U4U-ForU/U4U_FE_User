@@ -9,6 +9,8 @@ interface InputProps {
   type?: "text" | "password";
   value?: string;
   onChange?: (value: string) => void;
+  label?: string;
+  autoComplete?: string;
 }
 
 export default function Input({
@@ -16,6 +18,8 @@ export default function Input({
   type = "text",
   value,
   onChange,
+  label,
+  autoComplete,
 }: InputProps) {
   const [isVisible, setIsVisible] = useState(false);
   const isPassword = type === "password";
@@ -31,7 +35,8 @@ export default function Input({
         placeholder={placeholder}
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
-        autoComplete={isPassword ? "new-password" : undefined}
+        aria-label={label ?? placeholder}
+        autoComplete={autoComplete ?? (isPassword ? "new-password" : undefined)}
       />
       {isPassword && (
         <VisibilityButton
