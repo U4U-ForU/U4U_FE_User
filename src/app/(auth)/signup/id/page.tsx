@@ -15,9 +15,15 @@ import { useSignupSubmit } from "@/src/features/signup/model/useSignupSubmit";
 export default function IdPage() {
   const [id, setId] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { submit, isSubmitting, error } = useSignupSubmit();
+  const { submit, isSubmitting, error, resetError } = useSignupSubmit();
 
   const errorMessage = (isSubmitted ? validateId(id) : "") || error;
+
+  const handleChange = (value: string) => {
+    setId(value);
+
+    if (error !== "") resetError();
+  };
 
   const handleSubmit = () => {
     setIsSubmitted(true);
@@ -35,7 +41,7 @@ export default function IdPage() {
         <Input
           placeholder="아이디를 입력해주세요"
           value={id}
-          onChange={setId}
+          onChange={handleChange}
         />
         <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
         <ErrorMessage text={errorMessage} />

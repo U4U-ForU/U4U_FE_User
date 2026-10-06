@@ -35,5 +35,7 @@ export function useSignupSubmit() {
     [data, isSubmitting, router],
   );
 
-  return { submit, isSubmitting, error };
+  const resetError = useCallback(() => setError(""), []);
+
+  return { submit, isSubmitting, error, resetError };
 }
