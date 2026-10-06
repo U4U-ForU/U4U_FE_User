@@ -4,12 +4,15 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { getAccessToken } from "@/src/shared/lib/tokenStorage";
 
 export default function Splash() {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => router.replace("/signup"), 1000);
+    const timer = setTimeout(() => {
+      router.replace(getAccessToken() === null ? "/login" : "/main");
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [router]);
