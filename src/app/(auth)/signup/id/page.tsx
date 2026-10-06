@@ -10,41 +10,21 @@ import Question from "@/src/features/signup/ui/Question";
 import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
 import { validateId } from "@/src/features/signup/model/validate";
-import { useSignupContext } from "@/src/features/signup/model/SignupContext";
-import { requestSignup } from "@/src/features/signup/api/signup";
-import { useRouter } from "next/navigation";
+import { useSignupSubmit } from "@/src/features/signup/model/useSignupSubmit";
 
 export default function IdPage() {
-  const { data } = useSignupContext();
   const [id, setId] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
+  const { submit, isSubmitting, error } = useSignupSubmit();
 
-  const router = useRouter();
+  const errorMessage = (isSubmitted ? validateId(id) : "") || error;
 
-  const errorMessage = (isSubmitted ? validateId(id) : "") || submitError;
-
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setIsSubmitted(true);
-    setSubmitError("");
 
-    if (isSubmitting) return;
     if (validateId(id) !== "") return;
 
-    setIsSubmitting(true);
-
-    try {
-      await requestSignup({ ...data, loginId: id });
-      router.push("/login");
-    } catch (error) {
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.",
-      );
-      setIsSubmitting(false);
-    }
+    submit(id);
   };
 
   return (
