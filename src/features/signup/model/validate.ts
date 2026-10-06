@@ -25,7 +25,8 @@ export function validatePasswordConfirm(value: string, confirmValue: string) {
 
 export function validateNickname(value: string) {
   if (value === "") return "닉네임을 입력해주세요.";
-  if (!NICKNAME.test(value)) return "영문·한글·숫자 2~20자 이내로 입력해주세요.";
+  if (!NICKNAME.test(value))
+    return "영문·한글·숫자 2~20자 이내로 입력해주세요.";
   return "";
 }
 
