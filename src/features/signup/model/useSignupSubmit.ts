@@ -21,7 +21,7 @@ export function useSignupSubmit() {
 
       try {
         await signup({ ...data, loginId });
-        router.push("/login");
+        router.replace("/login");
       } catch (submitError) {
         setError(
           isAxiosError(submitError) &&

@@ -23,7 +23,7 @@ export function useLoginSubmit() {
         const tokens = await login({ loginId, password });
 
         saveTokens(tokens);
-        router.push("/main");
+        router.replace("/main");
       } catch (submitError) {
         setError(
           isAxiosError(submitError) &&
