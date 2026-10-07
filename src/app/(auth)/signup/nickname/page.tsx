@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Button from "@/src/shared/ui/Button";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
@@ -10,7 +10,7 @@ import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
-import { validateNickname } from "@/src/features/signup/model/validate";
+import { validateNickname } from "@/src/shared/lib/validate";
 import { useSignupContext } from "@/src/features/signup/model/SignupContext";
 
 export default function NicknamePage() {
@@ -27,7 +27,8 @@ export default function NicknamePage() {
     if (data.nickname !== "") save({ nickname: "" });
   };
 
-  const handleNext = () => {
+  const handleNext = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitted(true);
 
     if (validateNickname(nickname) !== "") return;
@@ -37,12 +38,14 @@ export default function NicknamePage() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleNext}>
       <Title text="서비스에서 사용할" />
       <Title text="닉네임을 입력해주세요" />
       <Field>
         <Input
+          label="닉네임"
           placeholder="닉네임을 입력해주세요"
+          autoComplete="nickname"
           value={nickname}
           onChange={handleChange}
         />
@@ -51,13 +54,13 @@ export default function NicknamePage() {
       </Field>
       <BottomArea>
         <Button
+          type="submit"
           text="다음"
           fontColor="#FFF"
           backgroundColor="#FFD3D3"
           borderColor="#DFAFAF"
           boxShadow={false}
           fontBorderColor="#C57373"
-          onClick={handleNext}
         />
         <Question text="회원가입" />
       </BottomArea>
@@ -65,7 +68,7 @@ export default function NicknamePage() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex: 1;
   flex-direction: column;

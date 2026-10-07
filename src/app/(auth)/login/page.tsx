@@ -1,68 +1,77 @@
 "use client";
 
 import styled from "@emotion/styled";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Button from "@/src/shared/ui/Button";
 import BottomArea from "@/src/features/signup/ui/BottomArea";
 import ErrorMessage from "@/src/features/signup/ui/ErrorMessage";
 import Input from "@/src/features/signup/ui/Input";
 import Question from "@/src/features/signup/ui/Question";
 import Title from "@/src/features/signup/ui/Title";
-import { validateEmail } from "@/src/features/signup/model/validate";
+import { validateId, validatePassword } from "@/src/shared/lib/validate";
+import { useLoginSubmit } from "@/src/features/login/model/useLoginSubmit";
 
 export default function Login() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { submit, isSubmitting, error, resetError } = useLoginSubmit();
 
-  const errorMessage = (() => {
-    if (!isSubmitted) return "";
-    return (
-      validateEmail(email) ||
-      (password === "" ? "비밀번호를 입력해주세요." : "")
-    );
-  })();
+  const errorMessage =
+    (isSubmitted ? validateId(loginId) || validatePassword(password) : "") ||
+    error;
 
-  const handleNext = () => {
+  const handleChange = (setValue: (value: string) => void) => {
+    return (value: string) => {
+      setValue(value);
+
+      if (error !== "") resetError();
+    };
+  };
+
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitted(true);
 
-    if (validateEmail(email) !== "") return;
-    if (password === "") return;
+    if (validateId(loginId) !== "") return;
+    if (validatePassword(password) !== "") return;
 
-    //로그인 api 호출, 성곡시 라우터 이동
-    router.push("/main");
+    submit({ loginId, password });
   };
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleLogin}>
       <TitleWrapper>
         <Title text="로그인" />
       </TitleWrapper>
       <Field>
         <Input
-          placeholder="이메일을 입력해주세요."
-          value={email}
-          onChange={setEmail}
+          label="아이디"
+          placeholder="아이디를 입력해주세요."
+          autoComplete="username"
+          value={loginId}
+          onChange={handleChange(setLoginId)}
         />
         <Input
+          label="비밀번호"
           placeholder="비밀번호를 입력해주세요."
           type="password"
+          autoComplete="current-password"
           value={password}
-          onChange={setPassword}
+          onChange={handleChange(setPassword)}
         />
         <ErrorMessage text={errorMessage} />
       </Field>
       <BottomArea>
         <Button
-          text="로그인"
+          type="submit"
+          text={isSubmitting ? "로그인 중" : "로그인"}
           fontColor="#FFF"
           backgroundColor="#FFD3D3"
           borderColor="#DFAFAF"
           boxShadow={false}
           fontBorderColor="#C57373"
-          onClick={handleNext}
+          disabled={isSubmitting}
         />
         <Question text="로그인" />
       </BottomArea>
@@ -70,7 +79,7 @@ export default function Login() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex: 1;
   flex-direction: column;
