@@ -2,13 +2,10 @@
 
 import { useEffect, useSyncExternalStore, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { getAccessToken } from "@/src/shared/lib/tokenStorage";
-
-const subscribe = (onStoreChange: () => void) => {
-  window.addEventListener("storage", onStoreChange);
-
-  return () => window.removeEventListener("storage", onStoreChange);
-};
+import {
+  getAccessToken,
+  subscribeTokenChange,
+} from "@/src/shared/lib/tokenStorage";
 
 const getSnapshot = () => getAccessToken() !== null;
 
@@ -27,7 +24,7 @@ export default function AuthGuard({
 }: AuthGuardProps) {
   const router = useRouter();
   const hasToken = useSyncExternalStore(
-    subscribe,
+    subscribeTokenChange,
     getSnapshot,
     getServerSnapshot,
   );
