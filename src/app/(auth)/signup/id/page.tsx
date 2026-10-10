@@ -11,11 +11,14 @@ import Requirement from "@/src/features/signup/ui/Requirement";
 import Title from "@/src/features/signup/ui/Title";
 import { validateId } from "@/src/shared/lib/validate";
 import { useSignupSubmit } from "@/src/features/signup/model/useSignupSubmit";
+import SuccessModal from "@/src/features/signup/ui/SuccessModal";
+import Modal from "@/src/shared/ui/Modal";
 
 export default function IdPage() {
   const [id, setId] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { submit, isSubmitting, error, resetError } = useSignupSubmit();
+  const { submit, isSubmitting, error, resetError, isSuccess, confirmSuccess } =
+    useSignupSubmit();
 
   const errorMessage = (isSubmitted ? validateId(id) : "") || error;
 
@@ -35,34 +38,40 @@ export default function IdPage() {
   };
 
   return (
-    <Wrapper onSubmit={handleSubmit}>
-      <Title text="로그인 시 사용될" />
-      <Title text="아이디를 입력해주세요" />
-      <Field>
-        <Input
-          label="아이디"
-          placeholder="아이디를 입력해주세요"
-          autoComplete="username"
-          value={id}
-          onChange={handleChange}
-        />
-        <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
-        <ErrorMessage text={errorMessage} />
-      </Field>
-      <BottomArea>
-        <Button
-          type="submit"
-          text={isSubmitting ? "가입 중" : "가입하기"}
-          fontColor="#FFF"
-          backgroundColor="#FFD3D3"
-          borderColor="#DFAFAF"
-          boxShadow={false}
-          fontBorderColor="#C57373"
-          disabled={isSubmitting}
-        />
-        <Question text="회원가입" />
-      </BottomArea>
-    </Wrapper>
+    <>
+      <Modal isOpen={isSuccess}>
+        <SuccessModal onConfirm={confirmSuccess} />
+      </Modal>
+
+      <Wrapper onSubmit={handleSubmit}>
+        <Title text="로그인 시 사용될" />
+        <Title text="아이디를 입력해주세요" />
+        <Field>
+          <Input
+            label="아이디"
+            placeholder="아이디를 입력해주세요"
+            autoComplete="username"
+            value={id}
+            onChange={handleChange}
+          />
+          <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
+          <ErrorMessage text={errorMessage} />
+        </Field>
+        <BottomArea>
+          <Button
+            type="submit"
+            text={isSubmitting ? "가입 중" : "가입하기"}
+            fontColor="#FFF"
+            backgroundColor="#FFD3D3"
+            borderColor="#DFAFAF"
+            boxShadow={false}
+            fontBorderColor="#C57373"
+            disabled={isSubmitting}
+          />
+          <Question text="회원가입" />
+        </BottomArea>
+      </Wrapper>
+    </>
   );
 }
 
