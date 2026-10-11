@@ -4,7 +4,7 @@ import MainHeader from "../../widgets/Header";
 import Button from "../../shared/ui/Button";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import DailyCheck from "@/src/features/dailyCheck/ui/DailyCheck";
+import DailyCheck from "@/src/features/dailyCheck";
 import MainMenuItemList from "@/src/widgets/main_menu";
 
 export default function Main() {

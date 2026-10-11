@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import DailyCheckBlock from "./DailyCheckBlock";
+import DailyCheckBlock from "./block/DailyCheckBlock";
+import DailyCheckCover from "./cover/DailyCheckCover";
+import DailyCheckCompleteModal from "./cover/DailyCheckCompleteModal";
 import Rope from "./Rope";
 
 export default function DailyCheck() {
