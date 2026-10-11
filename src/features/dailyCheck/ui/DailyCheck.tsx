@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import DailyCheckBlock from "./block/DailyCheckBlock";
@@ -5,7 +8,32 @@ import DailyCheckCover from "./cover/DailyCheckCover";
 import DailyCheckCompleteModal from "./cover/DailyCheckCompleteModal";
 import Rope from "./Rope";
 
+const NOTICE_DURATION = 1300;
+
 export default function DailyCheck() {
+  const [isCovered, setIsCovered] = useState(true);
+  const [isNoticeOpen, setIsNoticeOpen] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current !== null) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  const hideNotice = () => {
+    setIsNoticeOpen(false);
+    setIsCovered(false);
+  };
+
+  const showNotice = () => {
+    setIsNoticeOpen(true);
+
+    if (timerRef.current !== null) clearTimeout(timerRef.current);
+
+    timerRef.current = setTimeout(hideNotice, NOTICE_DURATION);
+  };
+
   return (
     <DailyCheckSection>
       <Rope />
@@ -17,6 +45,13 @@ export default function DailyCheck() {
         aria-hidden="true"
       />
       <DailyCheckBlock totalCount={5} />
+      {isCovered && <DailyCheckCover onClick={showNotice} />}
+
+      <DailyCheckCompleteModal
+        isOpen={isNoticeOpen}
+        reward={20}
+        onClose={hideNotice}
+      />
     </DailyCheckSection>
   );
 }
