@@ -49,7 +49,10 @@ export default function NicknamePage() {
           value={nickname}
           onChange={handleChange}
         />
-        <Requirement informationText="2자 이상 20자 이하" />
+        <Requirements>
+          <Requirement informationText="2자 이상 20자 이하" />
+          <Requirement informationText="닉네임은 가입 후에도 변경할 수 있어요" />
+        </Requirements>
         <ErrorMessage text={errorMessage} />
       </Field>
       <BottomArea>
@@ -72,6 +75,12 @@ const Wrapper = styled.form`
   display: flex;
   flex: 1;
   flex-direction: column;
+`;
+
+const Requirements = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 `;
 
 const Field = styled.div`
