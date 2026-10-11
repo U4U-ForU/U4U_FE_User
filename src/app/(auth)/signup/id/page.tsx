@@ -54,7 +54,10 @@ export default function IdPage() {
             value={id}
             onChange={handleChange}
           />
-          <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
+          <Requirements>
+            <Requirement informationText="영문, 숫자 조합 4~20자 이내" />
+            <Requirement informationText="가입 후에는 아이디를 변경할 수 없어요" />
+          </Requirements>
           <ErrorMessage text={errorMessage} />
         </Field>
         <BottomArea>
@@ -79,6 +82,12 @@ const Wrapper = styled.form`
   display: flex;
   flex: 1;
   flex-direction: column;
+`;
+
+const Requirements = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 `;
 
 const Field = styled.div`
