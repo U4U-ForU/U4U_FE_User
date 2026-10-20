@@ -16,17 +16,23 @@ const Icon = () => (
   </svg>
 );
 
-export default function SkipButton() {
+interface SkipButtonProps {
+  onClick: () => void;
+}
+
+export default function SkipButton({ onClick }: SkipButtonProps) {
   return (
-    <Wrapper>
+    <Wrapper type="button" onClick={onClick}>
       <Text>Skip</Text>
       <Icon />
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.button`
   display: inline-flex;
+  border: none;
+  cursor: pointer;
   padding: 6px 8px 6px 16px;
   flex-direction: row;
   justify-content: center;
