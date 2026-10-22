@@ -4,12 +4,15 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Header from "@/src/shared/ui/Header";
 import Button from "@/src/shared/ui/Button";
+import { useUserStarStore } from "@/src/entities/user/model/useUserStarStore";
 
 interface GachaReadyProps {
   onDraw: () => void;
 }
 
 export default function GachaReady({ onDraw }: GachaReadyProps) {
+  const starCount = useUserStarStore((state) => state.starCount);
+
   return (
     <Wrapper>
       <Header title="뽑기" />
@@ -34,7 +37,7 @@ export default function GachaReady({ onDraw }: GachaReadyProps) {
             onClick={onDraw}
           />
         </Buttons>
-        <CurrentStar>현재 별 보유 : 2400</CurrentStar>
+        <CurrentStar>현재 별 보유 : {starCount}</CurrentStar>
       </Bottom>
     </Wrapper>
   );
