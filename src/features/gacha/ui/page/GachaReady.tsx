@@ -5,9 +5,10 @@ import Image from "next/image";
 import Header from "@/src/shared/ui/Header";
 import Button from "@/src/shared/ui/Button";
 import { useUserStarStore } from "@/src/entities/user/model/useUserStarStore";
+import type { GachaDrawCount } from "@/src/features/gacha/model/types";
 
 interface GachaReadyProps {
-  onDraw: () => void;
+  onDraw: (drawCount: GachaDrawCount) => void;
 }
 
 export default function GachaReady({ onDraw }: GachaReadyProps) {
@@ -26,7 +27,7 @@ export default function GachaReady({ onDraw }: GachaReadyProps) {
             fontBorderColor="#A75959"
             borderColor="#DFAFAF"
             boxShadow={false}
-            onClick={onDraw}
+            onClick={() => onDraw(10)}
           />
           <Button
             text="별 2개로 1회 뽑기"
@@ -34,7 +35,7 @@ export default function GachaReady({ onDraw }: GachaReadyProps) {
             backgroundColor="white"
             borderColor="#DFAFAF"
             boxShadow={false}
-            onClick={onDraw}
+            onClick={() => onDraw(1)}
           />
         </Buttons>
         <CurrentStar>현재 별 보유 : {starCount}</CurrentStar>
