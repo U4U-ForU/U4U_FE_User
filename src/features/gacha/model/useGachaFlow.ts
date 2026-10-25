@@ -21,6 +21,10 @@ export function useGachaFlow() {
 
   const finishDrawing = useCallback(async () => {
     setItems((await resultRef.current) ?? []);
+    setStep("beforeResult");
+  }, []);
+
+  const showResult = useCallback(() => {
     setStep("result");
   }, []);
 
@@ -30,5 +34,5 @@ export function useGachaFlow() {
     setStep("ready");
   }, []);
 
-  return { step, items, draw, finishDrawing, reset };
+  return { step, items, draw, finishDrawing, showResult, reset };
 }
