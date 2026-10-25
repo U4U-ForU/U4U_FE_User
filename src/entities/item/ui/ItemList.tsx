@@ -33,6 +33,7 @@ export default function ItemList({ items }: ItemListProps) {
       >
         <ItemModal
           onClose={() => setSelectedItem(null)}
+          ButtonText="거래하러 가기"
           maker="maremare"
           img="/tempImg/tempItemImg.png"
           itemName={selectedItem?.name ?? ""}
