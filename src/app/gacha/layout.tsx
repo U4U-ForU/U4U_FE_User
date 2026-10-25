@@ -1,7 +1,5 @@
 import type { ReactNode } from "react";
 
-"use client";
-
 // import AuthGuard from "@/src/shared/ui/AuthGuard";
 //
 // return (

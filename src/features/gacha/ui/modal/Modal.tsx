@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
 import Button from "@/src/shared/ui/Button";
 import StarWrppaer from "./Star/StarWrppaer";
-import { GACHA_DRAW_COST, type GachaDrawCount } from "@/src/features/gacha/model/types";
+import {
+  GACHA_DRAW_COST,
+  type GachaDrawCount,
+} from "@/src/features/gacha/model/types";
 
 interface GachaModalProps {
   drawCount: GachaDrawCount;

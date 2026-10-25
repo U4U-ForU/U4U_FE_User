@@ -2,7 +2,10 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Star from "./Star";
 import { useUserStarStore } from "@/src/entities/user/model/useUserStarStore";
-import { GACHA_DRAW_COST, type GachaDrawCount } from "@/src/features/gacha/model/types";
+import {
+  GACHA_DRAW_COST,
+  type GachaDrawCount,
+} from "@/src/features/gacha/model/types";
 
 interface StarWrppaerProps {
   drawCount: GachaDrawCount;
