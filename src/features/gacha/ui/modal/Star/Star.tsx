@@ -41,7 +41,9 @@ export default function Star({
       $boxShadow={boxShadow}
     >
       <Image
-        src={state === "after" ? "/img/Gacha/StarAfter.svg" : "/img/Gacha/Star.svg"}
+        src={
+          state === "after" ? "/img/Gacha/StarAfter.svg" : "/img/Gacha/Star.svg"
+        }
         alt="별 개수"
         width={16}
         height={16}

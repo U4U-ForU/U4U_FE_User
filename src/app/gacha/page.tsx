@@ -7,6 +7,7 @@ import GachaModal from "@/src/features/gacha/ui/modal/Modal";
 import GachaReady from "@/src/features/gacha/ui/page/GachaReady";
 import GachaGo from "@/src/features/gacha/ui/page/GachaGo";
 import GachaBeforeResult from "@/src/features/gacha/ui/page/GachaBeforeResult";
+import GachaResult from "@/src/features/gacha/ui/page/GachaResult";
 import Modal from "@/src/shared/ui/Modal";
 import { useUserStarStore } from "@/src/entities/user/model/useUserStarStore";
 import {
@@ -17,7 +18,8 @@ import {
 export default function Gacha() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [drawCount, setDrawCount] = useState<GachaDrawCount>(10);
-  const { step, draw, finishDrawing, reset } = useGachaFlow();
+  const { step, items, draw, finishDrawing, showResult, reset } =
+    useGachaFlow();
   const spendStars = useUserStarStore((state) => state.spendStars);
 
   const confirmDraw = () => {
@@ -38,7 +40,8 @@ export default function Gacha() {
         />
       )}
       {step === "drawing" && <GachaGo onFinish={finishDrawing} />}
-      {step === "result" && <GachaBeforeResult onFinish={reset} />}
+      {step === "beforeResult" && <GachaBeforeResult onFinish={showResult} />}
+      {step === "result" && <GachaResult items={items} onFinish={reset} />}
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <GachaModal
