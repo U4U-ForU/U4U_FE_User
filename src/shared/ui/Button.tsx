@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { outerTextStroke } from "../lib/textStroke";
 
 interface ButtonProps {
   text: string;
@@ -30,6 +31,7 @@ export default function Button({
   return (
     <Wrapper
       type={type}
+      aria-label={text}
       className={className}
       onClick={onClick}
       disabled={disabled}
@@ -37,7 +39,11 @@ export default function Button({
       $borderColor={borderColor}
       $boxShadow={boxShadow}
     >
-      <Text $fontColor={fontColor} $fontBorderColor={fontBorderColor}>
+      <Text
+        data-text={text}
+        $fontColor={fontColor}
+        $fontBorderColor={fontBorderColor}
+      >
         {text}
       </Text>
     </Wrapper>
@@ -75,12 +81,13 @@ const Text = styled.span<{
   $fontColor: string;
   $fontBorderColor?: string;
 }>`
+  display: inline-block;
   font-family: "Cafe24 Ssurround", sans-serif;
   color: ${({ $fontColor }) => $fontColor};
-  -webkit-text-stroke: ${({ $fontBorderColor }) =>
-    $fontBorderColor ? `4px ${$fontBorderColor}` : "0"};
-  paint-order: stroke fill;
   font-size: 24px;
   font-weight: 400;
   line-height: 150%;
+
+  ${({ $fontColor, $fontBorderColor }) =>
+    $fontBorderColor && outerTextStroke($fontColor, $fontBorderColor, "4px")}
 `;
