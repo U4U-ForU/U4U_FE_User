@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import SkipButton from "@/src/features/gacha/ui/SkipButton";
+import { SkipArea } from "@/src/features/gacha/ui/SkipArea";
 
 const ANIMATION_DURATION = 2000;
 
@@ -42,12 +43,6 @@ const Wrapper = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-`;
-
-const SkipArea = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin: calc(15px + env(safe-area-inset-top)) 20px 0;
 `;
 
 const Content = styled.div`

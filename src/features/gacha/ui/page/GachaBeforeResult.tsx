@@ -3,6 +3,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import SkipButton from "../SkipButton";
+import { SkipArea } from "@/src/features/gacha/ui/SkipArea";
 import Button from "@/src/shared/ui/Button";
 
 interface GachaBeforeResultProps {
@@ -52,12 +53,6 @@ const Wrapper = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-`;
-
-const SkipArea = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin: calc(15px + env(safe-area-inset-top)) 20px 0;
 `;
 
 const Content = styled.div`
