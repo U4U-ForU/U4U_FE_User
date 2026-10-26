@@ -1,4 +1,5 @@
-export type GachaStep = "ready" | "drawing" | "beforeResult" | "result";
+export type GachaStep =
+  "ready" | "drawing" | "beforeResult" | "result" | "allResult";
 export type GachaDrawCount = 1 | 10;
 
 export const GACHA_DRAW_COST: Record<GachaDrawCount, number> = {

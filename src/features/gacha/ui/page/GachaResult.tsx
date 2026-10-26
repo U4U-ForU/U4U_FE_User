@@ -4,41 +4,29 @@ import styled from "@emotion/styled";
 import { useRef, useState, type PointerEvent } from "react";
 import ItemModal from "@/src/entities/item/ui/ItemModal";
 import SkipButton from "../SkipButton";
+import { SkipArea } from "@/src/features/gacha/ui/SkipArea";
 import ArrowButton from "../ArrowButton";
 import Infomation from "../modal/Infomation";
 import type { GachaItem } from "../../model/types";
 
 interface GachaResultProps {
   items: GachaItem[];
-  onFinish: () => void;
+  onSkip: () => void;
 }
 
 const MAX_STACKED_CARD = 2;
 const SWIPE_THRESHOLD = 50;
+const DRAG_START_THRESHOLD = 10;
 
-const PLACEHOLDER_ITEMS: GachaItem[] = Array.from(
-  { length: 3 },
-  (_, index) => ({
-    id: index,
-    name: "아이템 이름",
-    imageUrl: "/tempImg/tempItemImg.png",
-    description:
-      "푹신한 핑크빛 젤리가 콕 박힌 귀여운 냥이 장갑! 착용하면 냥냥 펀치의 파워가 업! 심쿵 주의 귀여움으로 적의 마음을 스르륵 녹여 공격력을 살짝 낮춰버려요.",
-  }),
-);
-
-export default function GachaResult({ items, onFinish }: GachaResultProps) {
-  const resultItems = items.length > 0 ? items : PLACEHOLDER_ITEMS;
+export default function GachaResult({ items, onSkip }: GachaResultProps) {
   const [index, setIndex] = useState(0);
   const startXRef = useRef<number | null>(null);
+  const isDraggingRef = useRef(false);
 
-  const currentItem = resultItems[index];
+  const currentItem = items[index];
   const isFirst = index === 0;
-  const isLast = index === resultItems.length - 1;
-  const stackedCount = Math.min(
-    resultItems.length - 1 - index,
-    MAX_STACKED_CARD,
-  );
+  const isLast = index === items.length - 1;
+  const stackedCount = Math.min(items.length - 1 - index, MAX_STACKED_CARD);
 
   const goPrev = () => {
     if (isFirst) return;
@@ -47,23 +35,35 @@ export default function GachaResult({ items, onFinish }: GachaResultProps) {
   };
 
   const goNext = () => {
-    if (isLast) {
-      onFinish();
-
-      return;
-    }
+    if (isLast) return;
 
     setIndex((prev) => prev + 1);
   };
 
-  const handlePointerDown = (event: PointerEvent) => {
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
     startXRef.current = event.clientX;
+    isDraggingRef.current = false;
   };
 
-  const handlePointerUp = (event: PointerEvent) => {
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const startX = startXRef.current;
 
+    if (startX === null || isDraggingRef.current) return;
+    if (Math.abs(event.clientX - startX) < DRAG_START_THRESHOLD) return;
+
+    isDraggingRef.current = true;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const endPointer = () => {
     startXRef.current = null;
+    isDraggingRef.current = false;
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const startX = startXRef.current;
+
+    endPointer();
 
     if (startX === null) return;
 
@@ -81,7 +81,7 @@ export default function GachaResult({ items, onFinish }: GachaResultProps) {
   return (
     <Wrapper>
       <SkipArea>
-        <SkipButton onClick={onFinish} />
+        <SkipButton onClick={onSkip} />
       </SkipArea>
 
       <InfomationArea>
@@ -98,10 +98,10 @@ export default function GachaResult({ items, onFinish }: GachaResultProps) {
 
         <CardArea
           onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
-          onPointerCancel={() => {
-            startXRef.current = null;
-          }}
+          onPointerCancel={endPointer}
+          onDragStart={(event) => event.preventDefault()}
         >
           {Array.from({ length: stackedCount }, (_, stackIndex) => (
             <StackedCard key={stackIndex} $depth={stackedCount - stackIndex} />
@@ -113,7 +113,7 @@ export default function GachaResult({ items, onFinish }: GachaResultProps) {
               itemName={currentItem.name}
               itemDescription={currentItem.description}
               ButtonText="다음"
-              onClose={onFinish}
+              onClose={onSkip}
               onButtonClick={goNext}
               showCloseButton={false}
             />
@@ -138,13 +138,6 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const SkipArea = styled.div`
-  display: flex;
-  align-self: stretch;
-  justify-content: flex-end;
-  margin: calc(15px + env(safe-area-inset-top) - 6px) 20px 0;
-`;
-
 const InfomationArea = styled.div`
   margin-top: 24px;
 `;
@@ -164,6 +157,8 @@ const CardArea = styled.div`
   height: 500px;
   flex-shrink: 0;
   touch-action: pan-y;
+  user-select: none;
+  -webkit-user-drag: none;
 `;
 
 const StackedCard = styled.div<{ $depth: number }>`

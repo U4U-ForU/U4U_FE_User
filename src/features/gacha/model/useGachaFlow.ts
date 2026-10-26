@@ -2,11 +2,12 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { GachaItem, GachaStep } from "./types";
+import { MOCK_GACHA_ITEMS } from "./mockItems";
 
 const requestGacha = async (): Promise<GachaItem[]> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  return [];
+  return MOCK_GACHA_ITEMS;
 };
 
 export function useGachaFlow() {
@@ -28,11 +29,23 @@ export function useGachaFlow() {
     setStep("result");
   }, []);
 
+  const showAllResult = useCallback(() => {
+    setStep("allResult");
+  }, []);
+
   const reset = useCallback(() => {
     resultRef.current = null;
     setItems([]);
     setStep("ready");
   }, []);
 
-  return { step, items, draw, finishDrawing, showResult, reset };
+  return {
+    step,
+    items,
+    draw,
+    finishDrawing,
+    showResult,
+    showAllResult,
+    reset,
+  };
 }
