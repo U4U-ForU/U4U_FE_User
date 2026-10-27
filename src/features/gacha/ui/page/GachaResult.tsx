@@ -112,9 +112,9 @@ export default function GachaResult({ items, onSkip }: GachaResultProps) {
               img={currentItem.imageUrl}
               itemName={currentItem.name}
               itemDescription={currentItem.description}
-              ButtonText="다음"
+              ButtonText={isLast ? "결과 보기" : "다음"}
               onClose={onSkip}
-              onButtonClick={goNext}
+              onButtonClick={isLast ? onSkip : goNext}
               showCloseButton={false}
             />
           </FrontCard>
