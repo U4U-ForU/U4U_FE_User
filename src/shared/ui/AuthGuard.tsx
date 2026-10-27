@@ -31,10 +31,10 @@ export default function AuthGuard({
   const isAllowed = hasToken === requireAuth;
 
   useEffect(() => {
-    if (isAllowed) return;
+    if (getSnapshot() === requireAuth) return;
 
     router.replace(redirectTo);
-  }, [isAllowed, redirectTo, router]);
+  }, [isAllowed, requireAuth, redirectTo, router]);
 
   return isAllowed ? children : null;
 }

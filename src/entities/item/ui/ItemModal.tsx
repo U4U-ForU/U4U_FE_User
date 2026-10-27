@@ -14,22 +14,34 @@ export default function ItemModal({
   itemName,
   itemCount,
   itemDescription,
+  ButtonText,
+  onButtonClick,
+  showCloseButton = true,
 }: ItemModalProps) {
+  const hasTopArea = Boolean(maker) || showCloseButton;
+
   return (
-    <Wrapper>
-      <Top>
-        <CloseButtonSpacer />
-        <MadeBy>@{maker}</MadeBy>
-        <CloseButton onClick={onClose} />
-      </Top>
+    <Wrapper $hasTopArea={hasTopArea}>
+      {hasTopArea && (
+        <Top>
+          <CloseButtonSpacer />
+          {maker ? <MadeBy>@{maker}</MadeBy> : <span />}
+          {showCloseButton ? (
+            <CloseButton onClick={onClose} />
+          ) : (
+            <CloseButtonSpacer />
+          )}
+        </Top>
+      )}
       <ImageArea>
         {itemCount ? <OverlapBadge count={itemCount} /> : null}
         <Image src={img} width={235} height={235} alt="아이템 이미지" />
       </ImageArea>
       <ItemName>{itemName}</ItemName>
-      <ItemDes>{itemDescription}</ItemDes>
+      <ItemDes $isExpanded={!maker}>{itemDescription}</ItemDes>
       <TradeButton
-        text="거래하러 가기"
+        text={ButtonText}
+        onClick={onButtonClick}
         fontColor="#fff"
         fontBorderColor="#A75959"
         backgroundColor="#FFD0D0"
@@ -40,13 +52,15 @@ export default function ItemModal({
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $hasTopArea: boolean }>`
   display: flex;
   width: 287px;
   height: 500px;
   padding: 12px 24px;
   flex-direction: column;
   align-items: center;
+  justify-content: ${({ $hasTopArea }) =>
+    $hasTopArea ? "flex-start" : "center"};
   border-radius: 12px;
   border: 2px solid var(--pink-p1, #ffe7e7);
   background: #fff;
@@ -97,7 +111,7 @@ const ItemName = styled.div`
   text-align: left;
 `;
 
-const ItemDes = styled.div`
+const ItemDes = styled.div<{ $isExpanded: boolean }>`
   margin-bottom: 16px;
   color: var(--color-gray-600, #868e96);
   font-family: Pretendard;
@@ -106,7 +120,8 @@ const ItemDes = styled.div`
   font-weight: 400;
   line-height: 150%;
   align-self: stretch;
-  max-height: calc(1.5em * 3);
+  max-height: ${({ $isExpanded }) =>
+    $isExpanded ? "calc(1.5em * 4)" : "calc(1.5em * 3)"};
   overflow-y: auto;
   overscroll-behavior: contain;
 `;

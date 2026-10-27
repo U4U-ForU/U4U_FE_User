@@ -10,10 +10,13 @@ export interface InventoryItem {
 }
 
 export interface ItemModalProps {
-  maker: string;
+  maker?: string;
   img: string;
+  ButtonText: string;
   itemName: string;
   itemCount?: number;
   itemDescription: string;
   onClose: () => void;
+  onButtonClick?: () => void;
+  showCloseButton?: boolean;
 }
