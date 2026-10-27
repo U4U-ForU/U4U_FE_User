@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Button from "@/src/shared/ui/Button";
 import StarWrppaer from "./Star/StarWrppaer";
+import { useUserStarStore } from "@/src/entities/user/model/useUserStarStore";
 import {
   GACHA_DRAW_COST,
   type GachaDrawCount,
@@ -17,7 +18,9 @@ export default function GachaModal({
   onCancel,
   onConfirm,
 }: GachaModalProps) {
+  const starCount = useUserStarStore((state) => state.starCount);
   const drawCost = GACHA_DRAW_COST[drawCount];
+  const hasEnoughStars = starCount >= drawCost;
 
   return (
     <Wrapper>
@@ -29,6 +32,9 @@ export default function GachaModal({
         </TextWrapper>
       </Top>
       <StarWrppaer drawCount={drawCount} />
+      {!hasEnoughStars && (
+        <Warning role="alert">별이 {drawCost - starCount}개 부족해요.</Warning>
+      )}
       <ButtonWrapper>
         <Button
           text="취소"
@@ -46,6 +52,7 @@ export default function GachaModal({
           borderColor="#DFAFAF"
           boxShadow={false}
           onClick={onConfirm}
+          disabled={!hasEnoughStars}
         />
       </ButtonWrapper>
     </Wrapper>
@@ -102,4 +109,15 @@ const Text = styled.div`
 
 const TextWrapper = styled.div`
   margin-bottom: 20px;
+`;
+
+const Warning = styled.p`
+  margin: 0;
+  color: var(--pink-p4, #a75959);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--typo-body-small, 14px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
 `;
