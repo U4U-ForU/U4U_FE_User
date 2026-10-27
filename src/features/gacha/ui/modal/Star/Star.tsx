@@ -30,15 +30,20 @@ export default function Star({
   className,
   state,
 }: StarProps) {
+
+  const isInteractive = Boolean(onClick);
+
   return (
     <Wrapper
-      type={type}
+      as={isInteractive ? "button" : "span"}
+      type={isInteractive ? type : undefined}
       className={className}
       onClick={onClick}
-      disabled={disabled}
+      disabled={isInteractive ? disabled : undefined}
       $backgroundColor={backgroundColor}
       $borderColor={borderColor}
       $boxShadow={boxShadow}
+      $isInteractive={isInteractive}
     >
       <Image
         src={
@@ -59,6 +64,7 @@ const Wrapper = styled.button<{
   $backgroundColor: string;
   $borderColor?: string;
   $boxShadow?: boolean;
+  $isInteractive: boolean;
 }>`
   display: flex;
   padding: 4px 16px;
@@ -71,7 +77,7 @@ const Wrapper = styled.button<{
   border-radius: var(--radius-full, 999999px);
   border: 2px solid ${({ $borderColor }) => $borderColor ?? "transparent"};
   background: ${({ $backgroundColor }) => $backgroundColor};
-  cursor: pointer;
+  cursor: ${({ $isInteractive }) => ($isInteractive ? "pointer" : "default")};
   transition: opacity 0.15s ease;
   box-shadow: ${({ $boxShadow }) =>
     $boxShadow
