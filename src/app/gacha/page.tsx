@@ -27,7 +27,7 @@ export default function Gacha() {
     if (!spendStars(GACHA_DRAW_COST[drawCount])) return;
 
     setIsModalOpen(false);
-    draw();
+    draw(drawCount);
   };
 
   return (

@@ -1,13 +1,15 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import type { GachaItem, GachaStep } from "./types";
-import { MOCK_GACHA_ITEMS } from "./mockItems";
+import type { GachaDrawCount, GachaItem, GachaStep } from "./types";
+import { createMockGachaItems } from "./mockItems";
 
-const requestGacha = async (): Promise<GachaItem[]> => {
+const requestGacha = async (
+  drawCount: GachaDrawCount,
+): Promise<GachaItem[]> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  return MOCK_GACHA_ITEMS;
+  return createMockGachaItems(drawCount);
 };
 
 export function useGachaFlow() {
@@ -15,8 +17,8 @@ export function useGachaFlow() {
   const [items, setItems] = useState<GachaItem[]>([]);
   const resultRef = useRef<Promise<GachaItem[]> | null>(null);
 
-  const draw = useCallback(() => {
-    resultRef.current = requestGacha();
+  const draw = useCallback((drawCount: GachaDrawCount) => {
+    resultRef.current = requestGacha(drawCount);
     setStep("drawing");
   }, []);
 
