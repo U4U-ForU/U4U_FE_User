@@ -3,7 +3,7 @@
 import styled from "@emotion/styled";
 import type { SubmitStatus } from "../model/types";
 import { useState } from "react";
-import Modal from "@/src/shared/ui/Modal";
+import Modal from "@/src/shared/ui/modal/ModalParent";
 import SubmitItemModal from "./SubmitItemModal";
 import SubmitStatusBadge from "./SubmitStatusBadge";
 

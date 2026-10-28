@@ -4,9 +4,10 @@ import type { DealComment } from "../../model/detail/types";
 
 interface CommentListProps {
   comments: DealComment[];
+  onDelete: (id: number) => void;
 }
 
-export default function CommentList({ comments }: CommentListProps) {
+export default function CommentList({ comments, onDelete }: CommentListProps) {
   if (comments.length === 0) return null;
 
   return (
@@ -17,6 +18,7 @@ export default function CommentList({ comments }: CommentListProps) {
           nickname={comment.nickname}
           itemCount={comment.itemCount}
           isMine={comment.isMine}
+          onDelete={() => onDelete(comment.id)}
         />
       ))}
     </Wrapper>

@@ -1,20 +1,49 @@
+"use client";
+
 import styled from "@emotion/styled";
+import { useState } from "react";
 import DealItemList from "../item/DealItemList";
+import Modal from "@/src/shared/ui/modal/Modal";
 
 interface CommentProps {
   nickname: string;
   itemCount: number;
   isMine: boolean;
+  onDelete: () => void;
 }
 
-export default function Comment({ nickname, itemCount, isMine }: CommentProps) {
+export default function Comment({
+  nickname,
+  itemCount,
+  isMine,
+  onDelete,
+}: CommentProps) {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
   return (
     <Wrapper>
       <Top>
         <Username>{nickname}</Username>
-        {isMine && <Delete type="button">삭제</Delete>}
+        {isMine && (
+          <Delete type="button" onClick={() => setIsDeleteOpen(true)}>
+            삭제
+          </Delete>
+        )}
       </Top>
       <DealItemList itemCount={itemCount} showAll itemSize={44} />
+
+      <Modal
+        title="댓글 삭제"
+        text="정말 댓글을 삭제하시겠습니까?"
+        text2="삭제한 댓글은 복구할 수 없습니다."
+        type="warn"
+        isOpen={isDeleteOpen}
+        onCancel={() => setIsDeleteOpen(false)}
+        onConfirm={() => {
+          setIsDeleteOpen(false);
+          onDelete();
+        }}
+      />
     </Wrapper>
   );
 }

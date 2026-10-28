@@ -109,7 +109,7 @@ const Placeholder = styled.button`
   line-height: 150%;
 `;
 
-const SelectedItem = styled.div<{ $isRemovable: boolean }>`
+const SelectedItem = styled.button<{ $isRemovable: boolean }>`
   display: flex;
   padding: 0;
   flex-shrink: 0;

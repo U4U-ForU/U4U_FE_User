@@ -6,13 +6,17 @@ import { useEffect, useRef, type ReactNode } from "react";
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-interface ModalProps {
+interface ModalParentProps {
   isOpen: boolean;
   children: ReactNode;
   onClose?: () => void;
 }
 
-export default function Modal({ isOpen, children, onClose }: ModalProps) {
+export default function ModalParent({
+  isOpen,
+  children,
+  onClose,
+}: ModalParentProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
 

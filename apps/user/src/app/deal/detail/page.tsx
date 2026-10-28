@@ -15,6 +15,7 @@ import { MOCK_COMMENTS } from "@/src/features/deal/model/detail/mockComments";
 const MAX_SELECTED_ITEMS = 10;
 
 export default function Detail() {
+  const [comments, setComments] = useState(MOCK_COMMENTS);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isProposing, setIsProposing] = useState(false);
   const [isSheetExpanded, setIsSheetExpanded] = useState(false);
@@ -29,6 +30,9 @@ export default function Detail() {
 
   const removeItem = (index: number) =>
     setSelectedItems((prev) => prev.filter((_, i) => i !== index));
+
+  const deleteComment = (id: number) =>
+    setComments((prev) => prev.filter((comment) => comment.id !== id));
 
   const startProposing = () => {
     setIsProposing(true);
@@ -53,7 +57,7 @@ export default function Detail() {
           text="여기 8개 아이템 거래하실 분 있으신가여
               몆개는 조합해서 얻은거라서 좀 희귀한 거랑 거래하고 싶어요...
               사실 별생각없구요 거래댓 많이 달아주세염"
-          commentCount={MOCK_COMMENTS.length}
+          commentCount={comments.length}
         >
           {isProposing && !isSheetExpanded && (
             <InputAnchor ref={inputRef}>
@@ -64,7 +68,7 @@ export default function Detail() {
               />
             </InputAnchor>
           )}
-          <CommentList comments={MOCK_COMMENTS} />
+          <CommentList comments={comments} onDelete={deleteComment} />
         </RoomDetail>
       </Content>
 
