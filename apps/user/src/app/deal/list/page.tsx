@@ -4,10 +4,10 @@ import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import Header from "@/src/shared/ui/Header";
 import DealList from "@/src/features/deal";
-import { MOCK_DEAL_ROOMS } from "@/src/features/deal/model/mockRooms";
+import { MOCK_DEAL_ROOMS } from "@/src/features/deal/model/list/mockRooms";
 import Button from "@/src/shared/ui/Button";
 
-export default function Deal() {
+export default function List() {
   return (
     <Page>
       <Global styles={dealBackground} />

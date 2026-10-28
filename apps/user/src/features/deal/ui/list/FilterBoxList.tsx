@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import FilterBox from "./FilterBox";
-import type { DealFilter } from "../model/types";
+import type { DealFilter } from "../../model/list/types";
 
 const FILTERS: DealFilter[] = ["전체", "내 글", "내 댓글"];
 

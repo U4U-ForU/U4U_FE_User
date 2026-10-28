@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import FilterBoxList from "./FilterBoxList";
 import EmptyList from "@/src/shared/ui/EmptyList";
 import Room from "./Room";
-import type { DealFilter, DealRoom } from "../model/types";
+import type { DealFilter, DealRoom } from "../../model/list/types";
 
 const EMPTY_MESSAGE: Record<DealFilter, string> = {
   전체: "거래 중인 방이 없습니다.",

@@ -1,13 +1,17 @@
 import Image from "next/image";
 import styled from "@emotion/styled";
 
-export default function DealItem() {
+interface DealItemProps {
+  size: number;
+}
+
+export default function DealItem({ size }: DealItemProps) {
   return (
     <Wrapper type="button">
       <Image
         src="/tempImg/tempItemImg.png"
-        width={50}
-        height={50}
+        width={size}
+        height={size}
         alt="아이템 이미지"
       />
     </Wrapper>

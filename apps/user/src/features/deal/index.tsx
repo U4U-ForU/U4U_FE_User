@@ -1,3 +1,3 @@
-import DealList from "./ui/DealList";
+import DealList from "./ui/list/DealList";
 
 export default DealList;

@@ -1,6 +1,5 @@
 import type { DealRoom } from "./types";
 
-// TODO: 거래 목록 API 연결 후 제거
 export const MOCK_DEAL_ROOMS: DealRoom[] = [
   {
     id: 1,

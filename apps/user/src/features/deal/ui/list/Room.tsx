@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import DealItemList from "./item/DealItemList";
+import DealItemList from "../item/DealItemList";
 
 interface RoomProps {
   name: string;
