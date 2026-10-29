@@ -12,7 +12,8 @@ import {
 
 type SnapPoint = "half" | "full";
 
-const SNAP_OFFSET: Record<SnapPoint, number> = { half: 45, full: 0 };
+export const SNAP_OFFSET: Record<SnapPoint, number> = { half: 45, full: 0 };
+export const SHEET_HALF_HEIGHT_DVH = 100 - 45;
 const CLOSE_OFFSET = 70;
 
 interface BottomSheetProps {
